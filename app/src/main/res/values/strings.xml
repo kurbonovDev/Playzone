@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Playzone</string>
+
+    <string name="playzone"><font color="#80FFFFFFFF">Playzone</font></string>
+    <string name="first_text_title">Latest Feature in Streaming Your Favorite Channel</string>
+    <string name="second_text_title">Feel The Beat as You are involved in the game</string>
+    <string name="third_text_title"><![CDATA[Share Your Awesome Experience with family & Friends]]></string>
+    <string name="first_text_btn">Next</string>
+    <string name="second_text_btn">Start Experience</string>
+    <string name="forgot_password"><u>Forgot password</u></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="some_text">Welcome back to PlayZone! Enter your email addres and your password to enjoy the latest features of PlayZone</string>
+    <string name="havent_acc">Don’t have acoount? <font color="#F4D144">Create one</font></string>
+    <string name="didn_t_receive_the_code_nsend_again"><font color="#FFFFFF">Didn’t receive the code?</font> <font color="#F4D144">\nSend again!</font>  </string>
+    <string name="some_text_forgot">Enter email address associated with your account and we’ll send an email with instructions to reset your password</string>
+
+</resources>
