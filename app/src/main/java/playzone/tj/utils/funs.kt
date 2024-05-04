@@ -6,7 +6,6 @@ import playzone.tj.R
 
 
 fun replaceFragment(fragment: Fragment, addStack: Boolean = true) {
-
     if (addStack) {
         APP_ACTIVITY.supportFragmentManager.beginTransaction()
             .addToBackStack(null)
@@ -16,7 +15,5 @@ fun replaceFragment(fragment: Fragment, addStack: Boolean = true) {
         APP_ACTIVITY.supportFragmentManager.beginTransaction()
             .replace(R.id.placeHolder, fragment)
             .commit()
-
     }
-
 }

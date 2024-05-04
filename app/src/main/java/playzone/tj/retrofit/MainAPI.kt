@@ -1,23 +1,22 @@
 package playzone.tj.retrofit
 
 import playzone.tj.retrofit.models.TokenResponse
+import playzone.tj.retrofit.models.events.EventRequest
+import playzone.tj.retrofit.models.events.EventResponse
 import playzone.tj.retrofit.models.forget_password.ForgetPasswordRemote
+import playzone.tj.retrofit.models.games.GameRequest
+import playzone.tj.retrofit.models.games.GameResponse
 import playzone.tj.retrofit.models.login.LoginReceiveRemote
 import playzone.tj.retrofit.models.registration.Otp
 import playzone.tj.retrofit.models.registration.RegisterReceiveRemote
 import retrofit2.http.Body
-import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface MainAPI {
-    @GET("/")
-    suspend fun getHello()
-
 
     @POST("login")
     suspend fun login(@Body loginReceiveRemote: LoginReceiveRemote):TokenResponse?
-
-
 
     @POST("register")
     suspend fun registerNewUser(@Body registerReceiveRemote: RegisterReceiveRemote)
@@ -31,4 +30,9 @@ interface MainAPI {
     @POST("confirmPassword")
     suspend fun confirmNewPassword(@Body forgetPasswordResponseRemote: ForgetPasswordRemote)
 
+    @POST("games/fetch")
+    suspend fun fetchGame(@Body gameRequest: GameRequest): GameResponse
+
+    @POST("events/fetch")
+    suspend fun fetchEvent(@Header("Bearer-Authorization") headerValue1: String, @Body eventRequest: EventRequest): EventResponse
 }

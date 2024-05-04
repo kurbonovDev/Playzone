@@ -19,7 +19,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
-    private var sharedPreferences: SharedPreferences?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,12 +34,12 @@ class MainActivity : AppCompatActivity() {
             .build()
 
          retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.0.158:8080").client(client)
+            .baseUrl("http://192.168.154.179:8080").client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         mainApi = retrofit.create(MainAPI::class.java)
-        replaceFragment(MainFragment(),false)
+        replaceFragment(HomeFragment(),false)
 
 
     }

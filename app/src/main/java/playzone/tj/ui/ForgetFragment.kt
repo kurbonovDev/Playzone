@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,6 +41,8 @@ class ForgetFragment : Fragment() {
             if (email.isNotEmpty()){
                 binding.progressBar.visibility=View.VISIBLE
                 binding.btnSendCodeToReset.isEnabled=false
+
+
                 CoroutineScope(Dispatchers.IO).launch{
                     try {
                         mainApi.sendCheckCodeToEmail(

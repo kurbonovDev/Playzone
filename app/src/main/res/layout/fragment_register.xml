@@ -120,6 +120,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/btn_create_account"
         app:layout_constraintStart_toStartOf="@+id/btn_create_account"
         app:layout_constraintTop_toBottomOf="@+id/btn_create_account">
@@ -147,10 +148,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        app:passwordToggleEnabled="true"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/btn_create_account"
         app:layout_constraintStart_toStartOf="@+id/btn_create_account"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
