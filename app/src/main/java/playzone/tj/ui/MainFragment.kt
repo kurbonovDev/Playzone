@@ -45,7 +45,12 @@ class MainFragment : Fragment() {
         sharedPreferences = APP_ACTIVITY.getSharedPreferences("my_storage", Context.MODE_PRIVATE)
 
         if (sharedPreferences.getBoolean("isRegistered",false)){
-            replaceFragment(HomeFragment(),false)
+
+           if (sharedPreferences.getBoolean("isChosenGenre",false)){
+               replaceFragment(HomeFragment(),false)
+           }else{
+               replaceFragment(ChooseGenreFragment(),false)
+           }
         }
         binding = FragmentMainBinding.inflate(layoutInflater, container, false)
         return binding.root

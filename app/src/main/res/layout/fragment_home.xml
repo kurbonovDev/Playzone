@@ -29,7 +29,7 @@
                 android:layout_height="56dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/avatars" />
+                android:src="@drawable/game_photo" />
 
             <TextView
                 android:id="@+id/name_user"
@@ -44,7 +44,7 @@
                 android:textSize="22sp"
                 app:layout_constraintStart_toEndOf="@+id/image_user"
                 app:layout_constraintTop_toTopOf="@+id/image_user"
-                tools:text="Erlink Halah" />
+                android:text="Erlink Halah" />
 
             <ImageView
                 android:id="@+id/ic_bell"
@@ -74,38 +74,96 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcViewStreams"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="87dp"
+                android:layout_height="147dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="40dp"
-                android:layout_marginEnd="24dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="@+id/block_for_home"
-                app:layout_constraintStart_toStartOf="@+id/block_for_home"
-                app:layout_constraintTop_toTopOf="@+id/block_for_home"
-                tools:itemCount="1"
-                tools:listitem="@layout/stream_item" />
+                android:background="@drawable/background_border_stream"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:gravity="center"
+                    android:text="Streamed"
+                    android:textColor="#82858B"
+                    android:textFontWeight="400"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="2.7K"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textFontWeight="700"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="18dp"
+                    android:background="#1F2430" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Popularity"
+                    android:textColor="#82858B"
+                    android:textFontWeight="400"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="5.7K"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textFontWeight="700"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="147dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="24dp"
+                android:src="@drawable/game_photo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+                app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/reViewCategory"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
-
+                android:clipToPadding="false"
                 android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="@+id/rcViewStreams"
-                app:layout_constraintStart_toStartOf="@+id/rcViewStreams"
-                app:layout_constraintTop_toBottomOf="@+id/rcViewStreams"
+                android:paddingHorizontal="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
                 tools:itemCount="1"
-                tools:listitem="@layout/category_item" />
+                tools:listitem="@layout/genre_item" />
 
             <TextView
                 android:id="@+id/popular_event_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="28dp"
                 android:text="Popular Event"
                 android:textColor="@color/white"
@@ -120,6 +178,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
+                android:layout_marginEnd="24dp"
                 android:text="Show all"
                 android:textColor="@color/white"
                 android:textFontWeight="400"
@@ -129,15 +188,18 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcViewEvents"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:clipToPadding="false"
                 android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="@+id/show_all_text"
-                app:layout_constraintStart_toStartOf="@+id/popular_event_text"
+                android:paddingHorizontal="24dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/popular_event_text"
-                tools:itemCount="1"
-                tools:listitem="@layout/stream_item" />
+                tools:itemCount="2"
+                tools:listitem="@layout/event_item" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

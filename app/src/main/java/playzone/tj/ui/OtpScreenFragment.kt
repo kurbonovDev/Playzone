@@ -110,11 +110,12 @@ class OtpScreenFragment(private val registerReceiveRemote: RegisterReceiveRemote
                         if (token != null) {
                             withContext(Dispatchers.Main) {
                                 sharedPreferences?.edit()?.putBoolean("isRegistered", true)?.apply()
+                                sharedPreferences?.edit()?.putString("login",registerReceiveRemote.login)?.apply()
                                 APP_ACTIVITY.supportFragmentManager.popBackStack(
                                     null,
                                     FragmentManager.POP_BACK_STACK_INCLUSIVE
                                 )
-                                replaceFragment(HomeFragment(), false)
+                                replaceFragment(ChooseGenreFragment(), false)
                             }
                         } else {
                             withContext(Dispatchers.Main) {

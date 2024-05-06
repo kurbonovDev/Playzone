@@ -7,6 +7,7 @@ import android.os.Bundle
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import playzone.tj.retrofit.MainAPI
+import playzone.tj.ui.ChooseGenreFragment
 import playzone.tj.ui.HomeFragment
 import playzone.tj.ui.MainFragment
 import playzone.tj.utils.APP_ACTIVITY
@@ -34,12 +35,12 @@ class MainActivity : AppCompatActivity() {
             .build()
 
          retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.154.179:8080").client(client)
+            .baseUrl("http://192.168.52.179:8080").client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         mainApi = retrofit.create(MainAPI::class.java)
-        replaceFragment(HomeFragment(),false)
+        replaceFragment(MainFragment(),false)
 
 
     }

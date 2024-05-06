@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home"
+        android:orderInCategory="1"
+        android:title="Home"
+        app:showAsAction="always|collapseActionView" />
+
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search"
+        android:orderInCategory="2"
+        android:title="Search"
+        app:showAsAction="always|collapseActionView" />
+    <item
+        android:id="@+id/sword"
+        android:icon="@drawable/ic_sword"
+        android:orderInCategory="3"
+        android:title="Swords"
+        app:showAsAction="always|collapseActionView" />
+    <item
+        android:id="@+id/translation"
+        android:icon="@drawable/ic_translation"
+        android:orderInCategory="4"
+        android:title="Отчет"
+        app:showAsAction="always|collapseActionView" />
+
+</menu>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_screen_color"
+    tools:context=".ui.ChooseGenreFragment">
+
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="Choose Categories"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textFontWeight="700"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:alpha="0.5"
+        android:text="Select your preferences game category"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textFontWeight="400"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="107dp"
+        android:layout_marginBottom="149dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btn_choose_genre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+        <ImageView
+            android:id="@+id/image_puzzle"
+            android:layout_width="100dp"
+            android:layout_height="135dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/puzzle_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/puzzle_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Puzzle"
+            android:textColor="@color/white"
+            android:textFontWeight="700"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/image_puzzle"
+            app:layout_constraintStart_toStartOf="@+id/image_puzzle"
+            app:layout_constraintTop_toBottomOf="@+id/image_puzzle" />
+
+        <ImageView
+            android:id="@+id/image_strategy"
+            android:layout_width="100dp"
+            android:layout_height="135dp"
+            android:layout_marginStart="63dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/strategy_image"
+            app:layout_constraintStart_toEndOf="@+id/image_puzzle"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/strategy_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Strategy"
+            android:textColor="@color/white"
+            android:textFontWeight="700"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/image_strategy"
+            app:layout_constraintStart_toStartOf="@+id/image_strategy"
+            app:layout_constraintTop_toBottomOf="@+id/image_strategy" />
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_sport"
+            android:layout_width="100dp"
+            android:layout_height="135dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="37dp"
+            android:src="@drawable/sport_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/puzzle_text" />
+
+        <TextView
+            android:id="@+id/sport_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Sport"
+            android:textColor="@color/white"
+            android:textFontWeight="700"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/image_sport"
+            app:layout_constraintStart_toStartOf="@+id/image_sport"
+            app:layout_constraintTop_toBottomOf="@+id/image_sport" />
+
+        <ImageView
+            android:id="@+id/image_logic"
+            android:layout_width="100dp"
+            android:layout_height="135dp"
+            android:layout_marginTop="37dp"
+            android:src="@drawable/logic_image"
+            app:layout_constraintEnd_toEndOf="@+id/strategy_text"
+            app:layout_constraintStart_toStartOf="@+id/strategy_text"
+            app:layout_constraintTop_toBottomOf="@+id/strategy_text" />
+
+        <TextView
+            android:id="@+id/logic_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Logic"
+            android:textColor="@color/white"
+            android:textFontWeight="700"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/image_logic"
+            app:layout_constraintTop_toBottomOf="@+id/image_logic" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/btn_choose_genre"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="34dp"
+        android:background="@drawable/background_textview_btn"
+        android:gravity="center"
+        android:text="Next"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
