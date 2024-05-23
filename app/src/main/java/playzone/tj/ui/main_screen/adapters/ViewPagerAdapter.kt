@@ -1,4 +1,4 @@
-package playzone.tj.adapters
+package playzone.tj.ui.main_screen.adapters
 
 import android.view.LayoutInflater
 import android.view.View

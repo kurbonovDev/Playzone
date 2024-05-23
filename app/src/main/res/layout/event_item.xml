@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="215dp"
-    android:layout_height="wrap_content"
+    android:layout_height="198dp"
     android:layout_marginEnd="16dp"
     app:cardBackgroundColor="#1F2430"
     app:cardCornerRadius="14dp">
@@ -20,8 +20,8 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
-            android:scaleType="fitXY"
             android:background="@drawable/rounded_corner_imageview"
+            android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -31,22 +31,22 @@
             android:id="@+id/event_creator_image"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            tools:src="@tools:sample/avatars"
             android:layout_marginStart="7dp"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="@+id/event_preview_image"
-            app:layout_constraintTop_toTopOf="@+id/event_preview_image" />
+            app:layout_constraintTop_toTopOf="@+id/event_preview_image"
+            tools:src="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/event_creator_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="49dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:maxLines="1"
-            android:ellipsize="end"
             app:layout_constraintBottom_toBottomOf="@id/event_creator_image"
             app:layout_constraintEnd_toEndOf="@+id/event_preview_image"
             app:layout_constraintStart_toEndOf="@+id/event_creator_image"
@@ -58,13 +58,12 @@
             android:id="@+id/event_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
             android:maxLines="2"
             android:textColor="@color/white"
             android:textFontWeight="700"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/event_preview_image"
             app:layout_constraintStart_toStartOf="@id/event_preview_image"
             app:layout_constraintTop_toBottomOf="@id/event_preview_image"
             tools:text="@tools:sample/lorem/random" />
@@ -73,28 +72,25 @@
             android:id="@+id/icon_calendar"
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:layout_marginTop="8dp"
             android:layout_marginBottom="17dp"
             android:src="@drawable/ic_calendarblank"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/event_name"
-            app:layout_constraintTop_toBottomOf="@id/event_name" />
+            app:layout_constraintStart_toStartOf="@id/event_name" />
 
         <TextView
             android:id="@+id/event_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:maxLines="1"
-            android:textSize="10sp"
-            android:textColor="@color/white"
             android:alpha="0.4"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="@id/icon_calendar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/icon_calendar"
             app:layout_constraintTop_toTopOf="@id/icon_calendar"
             tools:text="@tools:sample/lorem/random" />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

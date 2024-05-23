@@ -21,5 +21,20 @@
         <item name="android:textSelectHandleRight">@drawable/pv_invisible_image</item>
     </style>
 
+    <style name="SearchView" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:textColorHint">#696C75</item>
+        <item name="android:editTextColor">@color/white</item>
+        <item name="android:textStyle">normal</item>
+
+    </style>
     <style name="Theme.Playzone" parent="Base.Theme.Playzone" />
+
+
+
+    <style name="Theme.App.SplashScreen" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="windowSplashScreenIconBackgroundColor">@color/main_screen_color</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/user_settings</item>
+        <item name="postSplashScreenTheme">@style/Base.Theme.Playzone</item>
+
+    </style>
 </resources>

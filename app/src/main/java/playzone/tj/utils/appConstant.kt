@@ -16,3 +16,5 @@ lateinit var interceptor: HttpLoggingInterceptor
 
 lateinit var mainApi: MainAPI
 
+var baseUrl = "http://172.20.10.4:8080"
+

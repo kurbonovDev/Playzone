@@ -1,10 +1,10 @@
-package playzone.tj.adapters
+package playzone.tj.ui.home.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import playzone.tj.R
 import playzone.tj.databinding.EventItemBinding
 import playzone.tj.retrofit.models.events.EventDTO
@@ -19,7 +19,7 @@ class EventAdapter(private val list: List<EventDTO>): RecyclerView.Adapter<Event
         return EventViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = list.size
+    override fun getItemCount(): Int = 3
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val currentItem = list[position]
@@ -31,11 +31,13 @@ class EventAdapter(private val list: List<EventDTO>): RecyclerView.Adapter<Event
             Glide.with(holder.binding.root)
                 .load(currentItem.imageCreator)
                 .error(R.drawable.game_photo)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(eventCreatorImage)
 
             Glide.with(holder.binding.root)
                 .load(currentItem.imagePreview)
                 .error(R.drawable.game_photo)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(eventPreviewImage)
 
 

@@ -1,6 +1,9 @@
 package playzone.tj.retrofit
 
+import androidx.lifecycle.MutableLiveData
+import playzone.tj.retrofit.models.GetUser
 import playzone.tj.retrofit.models.TokenResponse
+import playzone.tj.retrofit.models.User
 import playzone.tj.retrofit.models.events.EventDTO
 import playzone.tj.retrofit.models.events.EventRequest
 import playzone.tj.retrofit.models.events.EventResponse
@@ -15,6 +18,7 @@ import playzone.tj.retrofit.models.user_genres.UserGenresResponse
 import playzone.tj.retrofit.models.user_genres.UsersGenresRequest
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 
@@ -40,7 +44,7 @@ interface MainAPI {
 
     @POST("events/fetch")
     suspend fun fetchEvent(@Header("Bearer-Authorization") headerValue: String,
-                           @Body eventRequest: EventRequest): List<EventDTO>
+                           @Body eventRequest: EventRequest):List<EventDTO>
 
 
     @POST("add/genres_to_user")
@@ -48,4 +52,10 @@ interface MainAPI {
 
     @POST("fetch/user_genres")
     suspend fun fetchUserGenres(@Body userGenresReceive: UserGenresReceive):UserGenresResponse
+
+    @POST("fetch/user")
+    suspend fun fetchUser(@Body getUser: GetUser): User
+
+    @POST("update_user_info")
+    suspend fun updateUser(@Body user: User)
 }

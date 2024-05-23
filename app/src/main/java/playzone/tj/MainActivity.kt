@@ -4,13 +4,16 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import playzone.tj.retrofit.MainAPI
-import playzone.tj.ui.ChooseGenreFragment
-import playzone.tj.ui.HomeFragment
-import playzone.tj.ui.MainFragment
+import playzone.tj.ui.home.HomeFragment
+import playzone.tj.ui.home.PopularEventsFragment
+import playzone.tj.ui.main_screen.MainFragment
+import playzone.tj.ui.registration.ChooseGenreFragment
 import playzone.tj.utils.APP_ACTIVITY
+import playzone.tj.utils.baseUrl
 import playzone.tj.utils.client
 import playzone.tj.utils.interceptor
 import playzone.tj.utils.mainApi
@@ -20,11 +23,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Thread.sleep(500)
+        installSplashScreen()
         setContentView(R.layout.activity_main)
-
-        APP_ACTIVITY=this
+        sharedPreferences = getSharedPreferences("my_storage", Context.MODE_PRIVATE)
+        APP_ACTIVITY = this
 
 
         interceptor = HttpLoggingInterceptor()
@@ -34,14 +40,23 @@ class MainActivity : AppCompatActivity() {
             .addInterceptor(interceptor)
             .build()
 
-         retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.52.179:8080").client(client)
+        retrofit = Retrofit.Builder()
+            .baseUrl(baseUrl).client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         mainApi = retrofit.create(MainAPI::class.java)
-        replaceFragment(MainFragment(),false)
 
+        if (sharedPreferences.getBoolean("isRegistered", false)) {
+            if(sharedPreferences.getBoolean("isChosenGenre",false)){
+                replaceFragment(HomeFragment(),false)
+            }else{
+                replaceFragment(ChooseGenreFragment(),false)
+            }
+        }else{
+
+            replaceFragment(MainFragment(), false)
+        }
 
     }
 }

@@ -1,4 +1,4 @@
-package playzone.tj.ui
+package playzone.tj.ui.registration
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import playzone.tj.databinding.FragmentChooseGenreBinding
 import playzone.tj.retrofit.models.user_genres.UsersGenresRequest
+import playzone.tj.ui.home.HomeFragment
 import playzone.tj.utils.APP_ACTIVITY
 import playzone.tj.utils.mainApi
 import playzone.tj.utils.replaceFragment
@@ -110,7 +111,6 @@ class ChooseGenreFragment() : Fragment() {
                             )
                         )
                         sharedPreferences?.edit()?.putBoolean("isChosenGenre", true)?.apply()
-
                         replaceFragment(HomeFragment(), false)
                     } catch (e: Exception) {
                         withContext(Dispatchers.Main) {

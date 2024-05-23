@@ -1,4 +1,4 @@
-package playzone.tj.ui
+package playzone.tj.ui.registration
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.FragmentManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,11 +19,11 @@ import kotlinx.coroutines.withContext
 import playzone.tj.databinding.FragmentOtpScreenBinding
 import playzone.tj.retrofit.models.registration.Otp
 import playzone.tj.retrofit.models.registration.RegisterReceiveRemote
+import playzone.tj.ui.registration.ChooseGenreFragment
 import playzone.tj.utils.APP_ACTIVITY
 import playzone.tj.utils.AppTextWatcher
 import playzone.tj.utils.mainApi
 import playzone.tj.utils.replaceFragment
-import retrofit2.HttpException
 
 
 class OtpScreenFragment(private val registerReceiveRemote: RegisterReceiveRemote) : Fragment() {
@@ -111,6 +112,7 @@ class OtpScreenFragment(private val registerReceiveRemote: RegisterReceiveRemote
                             withContext(Dispatchers.Main) {
                                 sharedPreferences?.edit()?.putBoolean("isRegistered", true)?.apply()
                                 sharedPreferences?.edit()?.putString("login",registerReceiveRemote.login)?.apply()
+                                sharedPreferences?.edit()?.putString("token",token.token)?.apply()
                                 APP_ACTIVITY.supportFragmentManager.popBackStack(
                                     null,
                                     FragmentManager.POP_BACK_STACK_INCLUSIVE
@@ -139,6 +141,7 @@ class OtpScreenFragment(private val registerReceiveRemote: RegisterReceiveRemote
                 }
             }
         })
+
     }
 
 

@@ -1,4 +1,4 @@
-package playzone.tj.ui
+package playzone.tj.ui.login
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -13,14 +13,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import playzone.tj.R
 import playzone.tj.databinding.FragmentLoginBinding
 import playzone.tj.retrofit.models.login.LoginReceiveRemote
+import playzone.tj.ui.featchs.ForgetFragment
+import playzone.tj.ui.home.HomeFragment
+import playzone.tj.ui.registration.RegisterFragment
 import playzone.tj.utils.APP_ACTIVITY
-import playzone.tj.utils.client
 import playzone.tj.utils.mainApi
 import playzone.tj.utils.replaceFragment
-import retrofit2.HttpException
 
 
 class LoginFragment : Fragment() {
@@ -64,6 +64,9 @@ class LoginFragment : Fragment() {
                 val token = mainApi.login(LoginReceiveRemote(login, password))
                 if (token != null) {
                     sharedPreferences.edit()?.putBoolean("isRegistered",true)?.apply()
+                    sharedPreferences.edit()?.putString("token",token.token)?.apply()
+                    sharedPreferences.edit()?.putString("login",login)?.apply()
+
                     replaceFragment(HomeFragment(), false)
                 }
             }catch (e: Exception) {

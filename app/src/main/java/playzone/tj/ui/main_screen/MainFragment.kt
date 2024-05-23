@@ -1,6 +1,5 @@
-package playzone.tj.ui
+package playzone.tj.ui.main_screen
 
-import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -12,16 +11,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.DrawableRes
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import playzone.tj.R
-import playzone.tj.adapters.ViewPagerAdapter
+import playzone.tj.ui.main_screen.adapters.ViewPagerAdapter
 import playzone.tj.databinding.FragmentMainBinding
+import playzone.tj.retrofit.models.user_genres.UserGenresReceive
+import playzone.tj.ui.home.HomeFragment
+import playzone.tj.ui.login.LoginFragment
+import playzone.tj.ui.registration.ChooseGenreFragment
 import playzone.tj.utils.APP_ACTIVITY
+import playzone.tj.utils.mainApi
 import playzone.tj.utils.replaceFragment
 import kotlin.math.abs
 
@@ -31,7 +38,6 @@ class MainFragment : Fragment() {
 
     private lateinit var viewPager2: ViewPager2
     private lateinit var handler: Handler
-    private lateinit var sharedPreferences:SharedPreferences
 
     @DrawableRes
     private var imageList = mutableListOf(R.drawable.img1, R.drawable.img2, R.drawable.img3)
@@ -42,16 +48,6 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        sharedPreferences = APP_ACTIVITY.getSharedPreferences("my_storage", Context.MODE_PRIVATE)
-
-        if (sharedPreferences.getBoolean("isRegistered",false)){
-
-           if (sharedPreferences.getBoolean("isChosenGenre",false)){
-               replaceFragment(HomeFragment(),false)
-           }else{
-               replaceFragment(ChooseGenreFragment(),false)
-           }
-        }
         binding = FragmentMainBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -59,21 +55,13 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         init()
         setUpTransformer()
         nextPageListener()
-
-
-
     }
 
 
-
-
-
-
-    private fun nextPageListener(){
+    private fun nextPageListener() {
         binding.btnNext.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -99,6 +87,7 @@ class MainFragment : Fragment() {
             }
         })
     }
+
     private val runnable = Runnable {
         viewPager2.currentItem = viewPager2.currentItem + 1
     }

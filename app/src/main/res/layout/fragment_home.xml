@@ -1,220 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:id="@+id/swiper"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_screen_color"
-    tools:context=".ui.HomeFragment">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/home_toolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/image_user"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/game_photo" />
-
-            <TextView
-                android:id="@+id/name_user"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="23dp"
-                android:maxLength="30"
-                android:maxLines="1"
-                android:textColor="@color/white"
-                android:textFontWeight="700"
-                android:textSize="22sp"
-                app:layout_constraintStart_toEndOf="@+id/image_user"
-                app:layout_constraintTop_toTopOf="@+id/image_user"
-                android:text="Erlink Halah" />
-
-            <ImageView
-                android:id="@+id/ic_bell"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_marginStart="76dp"
-                android:src="@drawable/ic_bell"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/name_user"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.appcompat.widget.Toolbar>
-
-    <ScrollView
-        android:id="@+id/scrollView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/menu_nbar"
-        app:layout_constraintEnd_toEndOf="@+id/home_toolbar"
-        app:layout_constraintStart_toStartOf="@+id/home_toolbar"
-        app:layout_constraintTop_toBottomOf="@+id/home_toolbar">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/block_for_home"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/main_screen_color"
+        tools:context=".ui.home.HomeFragment">
 
 
-            <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="87dp"
-                android:layout_height="147dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/background_border_stream"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/home_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:gravity="center"
-                    android:text="Streamed"
-                    android:textColor="#82858B"
-                    android:textFontWeight="400"
-                    android:textSize="12sp" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/image_user"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/game_photo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:id="@+id/name_user"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="2.7K"
-                    android:textAlignment="center"
+                    android:layout_marginStart="20dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="Erlink Halah"
                     android:textColor="@color/white"
                     android:textFontWeight="700"
-                    android:textSize="14sp" />
+                    android:textSize="22sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_user"
+                    app:layout_constraintEnd_toStartOf="@id/ic_settings"
+                    app:layout_constraintStart_toEndOf="@+id/image_user"
+                    app:layout_constraintTop_toTopOf="@+id/image_user" />
+
+                <ImageView
+                    android:id="@+id/ic_settings"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="76dp"
+                    android:src="@drawable/ic_settings"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/name_user"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/menu_nbar"
+            app:layout_constraintEnd_toEndOf="@+id/home_toolbar"
+            app:layout_constraintStart_toStartOf="@+id/home_toolbar"
+            app:layout_constraintTop_toBottomOf="@+id/home_toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/block_for_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginVertical="18dp"
-                    android:background="#1F2430" />
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="87dp"
+                    android:layout_height="150dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/background_border_stream"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:gravity="center"
+                        android:text="Streamed"
+                        android:textColor="#82858B"
+                        android:textFontWeight="400"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="2.7K"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textFontWeight="700"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginVertical="18dp"
+                        android:background="#1F2430" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Popularity"
+                        android:textColor="#82858B"
+                        android:textFontWeight="400"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="5.7K"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textFontWeight="700"
+                        android:textSize="14sp" />
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="147dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:src="@drawable/game_photo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+                    app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/reViewCategory"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:paddingHorizontal="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/genre_item" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:id="@+id/popular_event_text"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Popularity"
-                    android:textColor="#82858B"
-                    android:textFontWeight="400"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="5.7K"
-                    android:textAlignment="center"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="28dp"
+                    android:text="Popular Event"
                     android:textColor="@color/white"
                     android:textFontWeight="700"
-                    android:textSize="14sp" />
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/reViewCategory"
+                    app:layout_constraintTop_toBottomOf="@+id/reViewCategory" />
 
 
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/show_all_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginEnd="24dp"
+                    android:text="Show all"
+                    android:textColor="@color/white"
+                    android:textFontWeight="400"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/reViewCategory"
+                    app:layout_constraintTop_toBottomOf="@+id/reViewCategory" />
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="147dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="24dp"
-                android:src="@drawable/game_photo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/linearLayout2"
-                app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcViewEvents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="24dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/popular_event_text"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/event_item" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/reViewCategory"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:paddingHorizontal="24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-                tools:itemCount="1"
-                tools:listitem="@layout/genre_item" />
-
-            <TextView
-                android:id="@+id/popular_event_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="28dp"
-                android:text="Popular Event"
-                android:textColor="@color/white"
-                android:textFontWeight="700"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/reViewCategory"
-                app:layout_constraintTop_toBottomOf="@+id/reViewCategory" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
 
-            <TextView
-                android:id="@+id/show_all_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                android:layout_marginEnd="24dp"
-                android:text="Show all"
-                android:textColor="@color/white"
-                android:textFontWeight="400"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/reViewCategory"
-                app:layout_constraintTop_toBottomOf="@+id/reViewCategory" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcViewEvents"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:paddingHorizontal="24dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/popular_event_text"
-                tools:itemCount="2"
-                tools:listitem="@layout/event_item" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/menu_nbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="65dp"
+            android:background="@color/main_screen_color"
+            app:menu="@menu/menu_nbar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/menu_nbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="65dp"
-        android:background="@color/main_screen_color"
-        app:menu="@menu/menu_nbar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

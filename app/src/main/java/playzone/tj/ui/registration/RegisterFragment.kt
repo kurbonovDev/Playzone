@@ -1,4 +1,4 @@
-package playzone.tj.ui
+package playzone.tj.ui.registration
 
 import android.os.Bundle
 import android.util.Log
@@ -75,6 +75,11 @@ class RegisterFragment : Fragment() {
                     }
                 }catch (e:Exception){
                     Log.d("MyTag", "RegisterFragment: ${e.message}")
+                    withContext(Dispatchers.Main){
+
+                        binding.progressBar2.visibility = View.GONE
+                        binding.btnCreateAccount.isEnabled = true
+                    }
                 }
 
             }

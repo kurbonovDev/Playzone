@@ -1,7 +1,6 @@
-package playzone.tj.ui
+package playzone.tj.ui.featchs
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import playzone.tj.databinding.FragmentConfirmPasswordBinding
 import playzone.tj.retrofit.models.forget_password.ForgetPasswordRemote
+import playzone.tj.ui.login.LoginFragment
 import playzone.tj.utils.APP_ACTIVITY
 import playzone.tj.utils.mainApi
 import playzone.tj.utils.replaceFragment
