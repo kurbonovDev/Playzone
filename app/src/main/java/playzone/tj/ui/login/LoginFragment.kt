@@ -16,7 +16,8 @@ import kotlinx.coroutines.withContext
 import playzone.tj.databinding.FragmentLoginBinding
 import playzone.tj.retrofit.models.login.LoginReceiveRemote
 import playzone.tj.ui.featchs.ForgetFragment
-import playzone.tj.ui.home.HomeFragment
+import playzone.tj.ui.main.PointFragment
+import playzone.tj.ui.main.home.HomeFragment
 import playzone.tj.ui.registration.RegisterFragment
 import playzone.tj.utils.APP_ACTIVITY
 import playzone.tj.utils.mainApi
@@ -67,7 +68,7 @@ class LoginFragment : Fragment() {
                     sharedPreferences.edit()?.putString("token",token.token)?.apply()
                     sharedPreferences.edit()?.putString("login",login)?.apply()
 
-                    replaceFragment(HomeFragment(), false)
+                    replaceFragment(PointFragment(), false)
                 }
             }catch (e: Exception) {
 

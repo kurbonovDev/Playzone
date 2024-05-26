@@ -1,4 +1,4 @@
-package playzone.tj.ui.home
+package playzone.tj.ui.main.home
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -18,12 +19,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import playzone.tj.R
-import playzone.tj.ui.home.adapters.EventAdapter
-import playzone.tj.ui.home.adapters.GenreAdapter
+import playzone.tj.ui.main.home.adapter_home.EventAdapter
+import playzone.tj.ui.main.home.adapter_home.GenreAdapter
 import playzone.tj.databinding.FragmentHomeBinding
 import playzone.tj.retrofit.models.events.EventDTO
 import playzone.tj.retrofit.models.user_genres.Genres
-import playzone.tj.ui.home.viewModels.HomeViewModel
+import playzone.tj.ui.main.home.all_events.PopularEventsFragment
+import playzone.tj.ui.main.home.user_info.UserInfoFragment
+import playzone.tj.ui.main.home.viewModels.HomeViewModel
 import playzone.tj.utils.APP_ACTIVITY
 import playzone.tj.utils.replaceFragment
 
@@ -52,9 +55,14 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         sharedPreferences = APP_ACTIVITY.getSharedPreferences("my_storage", Context.MODE_PRIVATE)
         sharedPreferences.edit()?.putBoolean("isChosenGenre", true)?.apply()
-        binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        super.onViewCreated(view, savedInstanceState)
         token = sharedPreferences.getString("token", "")
         login = sharedPreferences.getString("login", "")
         initEventRcView()
@@ -63,18 +71,19 @@ class HomeFragment : Fragment() {
         openSettings()
         showAllEvents()
         updateUI()
-        return binding.root
     }
 
     private fun showAllEvents() {
         binding.showAllText.setOnClickListener {
-            replaceFragment(PopularEventsFragment())
+              val action =HomeFragmentDirections.actionHomeFragmentToPopularEventsFragment()
+              findNavController().navigate(action)
         }
     }
 
     private fun openSettings() {
         binding.icSettings.setOnClickListener {
-            replaceFragment(UserInfoFragment())
+            val action =HomeFragmentDirections.actionHomeFragmentToUserInfoFragment()
+            findNavController().navigate(action)
         }
     }
 
@@ -83,9 +92,9 @@ class HomeFragment : Fragment() {
             val login = sharedPreferences.getString("login", "")
             homeViewModel.fetchUser(login!!)
             withContext(Dispatchers.Main) {
-                binding.nameUser.text = homeViewModel.userData?.username
+                binding.nameUser.text = homeViewModel.userData.username
                 Glide.with(APP_ACTIVITY)
-                    .load(homeViewModel.userData?.userImage)
+                    .load(homeViewModel.userData.userImage)
                     .error(R.drawable.user)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(binding.imageUser)

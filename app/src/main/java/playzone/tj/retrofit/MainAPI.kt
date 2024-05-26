@@ -8,6 +8,7 @@ import playzone.tj.retrofit.models.events.EventDTO
 import playzone.tj.retrofit.models.events.EventRequest
 import playzone.tj.retrofit.models.events.EventResponse
 import playzone.tj.retrofit.models.forget_password.ForgetPasswordRemote
+import playzone.tj.retrofit.models.games.GameDTO
 import playzone.tj.retrofit.models.games.GameRequest
 import playzone.tj.retrofit.models.games.GameResponse
 import playzone.tj.retrofit.models.login.LoginReceiveRemote
@@ -58,4 +59,9 @@ interface MainAPI {
 
     @POST("update_user_info")
     suspend fun updateUser(@Body user: User)
+
+
+    @POST("games/fetch")
+    suspend fun fetchGames(@Header("Bearer-Authorization") headerValue: String,
+                           @Body gameRequest: GameRequest):List<GameDTO>
 }

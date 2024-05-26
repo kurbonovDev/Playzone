@@ -1,4 +1,4 @@
-package playzone.tj.ui.home
+package playzone.tj.ui.main.home.user_info
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +17,9 @@ import kotlinx.coroutines.withContext
 import playzone.tj.R
 import playzone.tj.databinding.FragmentFillUserInfoBinding
 import playzone.tj.retrofit.models.User
-import playzone.tj.ui.home.viewModels.HomeViewModel
+import playzone.tj.ui.main.home.HomeFragment
+import playzone.tj.ui.main.home.HomeFragmentDirections
+import playzone.tj.ui.main.home.viewModels.HomeViewModel
 import playzone.tj.utils.APP_ACTIVITY
 import playzone.tj.utils.mainApi
 import playzone.tj.utils.replaceFragment
@@ -25,7 +28,7 @@ import playzone.tj.utils.replaceFragment
 class UserInfoFragment() : Fragment() {
 
     private lateinit var binding: FragmentFillUserInfoBinding
-    private val homeViewModel:HomeViewModel by activityViewModels()
+    private val homeViewModel: HomeViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -75,7 +78,8 @@ class UserInfoFragment() : Fragment() {
                         user
                     )
 
-                    replaceFragment(HomeFragment(),false)
+                   val action = UserInfoFragmentDirections.actionUserInfoFragmentToHomeFragment()
+                    findNavController().navigate(action)
 
                 }catch (e:Exception){
                     withContext(Dispatchers.Main){

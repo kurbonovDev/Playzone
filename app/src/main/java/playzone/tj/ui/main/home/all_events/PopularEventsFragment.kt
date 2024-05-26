@@ -1,4 +1,4 @@
-package playzone.tj.ui.home
+package playzone.tj.ui.main.home.all_events
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,16 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import playzone.tj.R
 import playzone.tj.databinding.FragmentPopularEventsBinding
 import playzone.tj.retrofit.models.events.EventDTO
-import playzone.tj.ui.home.adapters.AllEventsAdapter
-import playzone.tj.ui.home.viewModels.HomeViewModel
+import playzone.tj.ui.main.home.HomeFragmentDirections
+import playzone.tj.ui.main.home.all_events.adapter.AllEventsAdapter
+import playzone.tj.ui.main.home.viewModels.HomeViewModel
 import playzone.tj.utils.APP_ACTIVITY
 
 
@@ -25,7 +28,7 @@ class PopularEventsFragment() : Fragment() {
     private lateinit var binding: FragmentPopularEventsBinding
     private lateinit var rcView: RecyclerView
     private lateinit var adapter: AllEventsAdapter
-    private val viewModel:HomeViewModel by activityViewModels()
+    private val viewModel: HomeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +44,12 @@ class PopularEventsFragment() : Fragment() {
         animateSearchView()
         initRcView()
         findEvent()
-        binding.back.setOnClickListener { APP_ACTIVITY.onBackPressed() }
+        binding.back.setOnClickListener {
+          /* val action = PopularEventsFragmentDirections.actionPopularEventsFragmentToHomeFragment()
+            findNavController().navigate(action)*/
+            APP_ACTIVITY.onBackPressed()
+
+        }
     }
 
     private fun initRcView() {
@@ -49,6 +57,7 @@ class PopularEventsFragment() : Fragment() {
         rcView.layoutManager = LinearLayoutManager(APP_ACTIVITY)
         adapter = AllEventsAdapter(viewModel.eventData)
         rcView.adapter = adapter
+
     }
 
     private fun animateSearchView() {
@@ -57,9 +66,9 @@ class PopularEventsFragment() : Fragment() {
                 binding.searchView.context,
                 R.anim.slide_searchview_visible
             )
-            binding.back.visibility = View.INVISIBLE
-            binding.popularEventText.visibility = View.INVISIBLE
-            binding.find.visibility = View.INVISIBLE
+            binding.back.visibility = View.GONE
+            binding.popularEventText.visibility = View.GONE
+            binding.find.visibility = View.GONE
             binding.back.startAnimation(slideRightToLeft)
             binding.popularEventText.startAnimation(slideRightToLeft)
             binding.find.startAnimation(slideRightToLeft)
@@ -67,6 +76,8 @@ class PopularEventsFragment() : Fragment() {
             binding.tvCancel.visibility = View.VISIBLE
             binding.searchView.startAnimation(slideRightToLeft)
             binding.tvCancel.startAnimation(slideRightToLeft)
+
+            binding.rcViewEvents.isVisible = false
         }
 
         binding.tvCancel.setOnClickListener {
@@ -74,8 +85,10 @@ class PopularEventsFragment() : Fragment() {
                 binding.searchView.context,
                 R.anim.slide_searchview_gone
             )
-            binding.searchView.visibility = View.INVISIBLE
-            binding.tvCancel.visibility = View.INVISIBLE
+            binding.rcViewEvents.isVisible = true
+
+            binding.searchView.visibility = View.GONE
+            binding.tvCancel.visibility = View.GONE
             binding.back.visibility = View.VISIBLE
             binding.find.visibility = View.VISIBLE
             binding.popularEventText.visibility = View.VISIBLE
@@ -84,10 +97,7 @@ class PopularEventsFragment() : Fragment() {
             binding.find.startAnimation(slideLeftToRight)
             binding.popularEventText.startAnimation(slideLeftToRight)
             binding.back.startAnimation(slideLeftToRight)
-
-
-
-            binding.searchView.setQuery("",false)
+            binding.searchView.setQuery("", false)
             binding.searchView.clearFocus()
             rcView.adapter = AllEventsAdapter(viewModel.eventData)
 
@@ -99,7 +109,7 @@ class PopularEventsFragment() : Fragment() {
         if (query != null) {
             val filteredList = ArrayList<EventDTO>()
             for (i in viewModel.eventData) {
-                if (i.eventName.contains(query,ignoreCase = true)) {
+                if (i.eventName.contains(query, ignoreCase = true)) {
                     filteredList.add(i)
                 }
             }
@@ -127,12 +137,11 @@ class PopularEventsFragment() : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 filterList(newText)
+                if (newText?.length==0) binding.rcViewEvents.isVisible = false
                 return true
             }
         })
     }
-
-
 
 
 }

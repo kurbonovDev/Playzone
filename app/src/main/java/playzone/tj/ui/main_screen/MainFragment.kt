@@ -1,7 +1,5 @@
 package playzone.tj.ui.main_screen
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -12,23 +10,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import playzone.tj.R
 import playzone.tj.ui.main_screen.adapters.ViewPagerAdapter
 import playzone.tj.databinding.FragmentMainBinding
-import playzone.tj.retrofit.models.user_genres.UserGenresReceive
-import playzone.tj.ui.home.HomeFragment
 import playzone.tj.ui.login.LoginFragment
-import playzone.tj.ui.registration.ChooseGenreFragment
-import playzone.tj.utils.APP_ACTIVITY
-import playzone.tj.utils.mainApi
 import playzone.tj.utils.replaceFragment
 import kotlin.math.abs
 

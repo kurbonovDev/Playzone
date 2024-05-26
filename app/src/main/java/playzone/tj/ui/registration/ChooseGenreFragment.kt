@@ -15,7 +15,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import playzone.tj.databinding.FragmentChooseGenreBinding
 import playzone.tj.retrofit.models.user_genres.UsersGenresRequest
-import playzone.tj.ui.home.HomeFragment
+import playzone.tj.ui.main.PointFragment
+import playzone.tj.ui.main.home.HomeFragment
 import playzone.tj.utils.APP_ACTIVITY
 import playzone.tj.utils.mainApi
 import playzone.tj.utils.replaceFragment
@@ -111,7 +112,7 @@ class ChooseGenreFragment() : Fragment() {
                             )
                         )
                         sharedPreferences?.edit()?.putBoolean("isChosenGenre", true)?.apply()
-                        replaceFragment(HomeFragment(), false)
+                        replaceFragment(PointFragment(), false)
                     } catch (e: Exception) {
                         withContext(Dispatchers.Main) {
                             binding.btnChooseGenre.isEnabled = true

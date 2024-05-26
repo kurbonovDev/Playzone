@@ -5,11 +5,13 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.findNavController
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import playzone.tj.retrofit.MainAPI
-import playzone.tj.ui.home.HomeFragment
-import playzone.tj.ui.home.PopularEventsFragment
+import playzone.tj.ui.main.PointFragment
+import playzone.tj.ui.main.games.GamesFragment
+import playzone.tj.ui.main.home.HomeFragment
 import playzone.tj.ui.main_screen.MainFragment
 import playzone.tj.ui.registration.ChooseGenreFragment
 import playzone.tj.utils.APP_ACTIVITY
@@ -32,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("my_storage", Context.MODE_PRIVATE)
         APP_ACTIVITY = this
 
-
         interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
 
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         if (sharedPreferences.getBoolean("isRegistered", false)) {
             if(sharedPreferences.getBoolean("isChosenGenre",false)){
-                replaceFragment(HomeFragment(),false)
+                replaceFragment(PointFragment(),false)
             }else{
                 replaceFragment(ChooseGenreFragment(),false)
             }

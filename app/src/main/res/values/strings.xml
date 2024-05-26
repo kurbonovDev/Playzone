@@ -15,4 +15,7 @@
     <string name="didn_t_receive_the_code_nsend_again"><font color="#FFFFFF">Didn’t receive the code?</font> <font color="#F4D144">\nSend again!</font>  </string>
     <string name="some_text_forgot">Enter email address associated with your account and we’ll send an email with instructions to reset your password</string>
 
+
+    <string name="PLAYZONE"><font color="#60FFFFFF">P</font><font color="#65FFFFFF">l</font><font color="#70FFFFFF">a</font><font color="#79FFFFFF">y</font><font color="#88FFFFFF">z</font><font color="#92FFFFFF">o</font><font color="#99FFFFFF">n</font><font color="#99FFFFFF">e</font> </string>
+
 </resources>

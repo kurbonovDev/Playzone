@@ -5,77 +5,95 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_screen_color"
-    tools:context=".ui.home.PopularEventsFragment">
+    tools:context=".ui.main.home.all_events.PopularEventsFragment">
 
-
-    <ImageView
-        android:id="@+id/back"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="26dp"
-        android:src="@drawable/ic_back"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <TextView
-        android:id="@+id/popular_event_text"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/event_toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Popular Events"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@id/back"
-        app:layout_constraintEnd_toStartOf="@+id/find"
-        app:layout_constraintStart_toEndOf="@id/back"
-        app:layout_constraintTop_toTopOf="@id/back" />
-
-
-    <ImageView
-        android:id="@+id/find"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="24dp"
-        android:src="@drawable/ic_find"
-        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/background_for_searchview"
-        android:theme="@style/SearchView"
-        android:visibility="invisible"
-        app:circularflow_radiusInDP="16dp"
-        app:iconifiedByDefault="false"
-        app:layout_constraintEnd_toStartOf="@+id/tvCancel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:queryBackground="@android:color/transparent"
-        app:queryHint="Search events" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tvCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:text="Cancel"
-        android:textColor="#45454D"
-        android:textFontWeight="400"
-        android:textSize="16sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/searchView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/searchView" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="16dp">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="26dp"
+                android:layout_marginBottom="26dp"
+                android:src="@drawable/ic_back"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/popular_event_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Popular Events"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@id/back"
+                app:layout_constraintEnd_toStartOf="@+id/find"
+                app:layout_constraintStart_toEndOf="@id/back"
+                app:layout_constraintTop_toTopOf="@id/back" />
+
+
+            <ImageView
+                android:id="@+id/find"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="26dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="26dp"
+                android:src="@drawable/ic_find"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/background_for_searchview"
+                android:theme="@style/SearchView"
+                android:visibility="invisible"
+                app:circularflow_radiusInDP="16dp"
+                app:iconifiedByDefault="false"
+                app:layout_constraintEnd_toStartOf="@+id/tvCancel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:queryBackground="@android:color/transparent"
+                app:queryHint="Search events" />
+
+            <TextView
+                android:id="@+id/tvCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:text="Cancel"
+                android:textColor="#45454D"
+                android:textFontWeight="400"
+                android:textSize="16sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/searchView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/searchView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.Toolbar>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcViewEvents"
@@ -87,7 +105,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back"
+        app:layout_constraintTop_toBottomOf="@+id/event_toolbar"
         tools:listitem="@layout/all_event_item" />
 
     <ImageView

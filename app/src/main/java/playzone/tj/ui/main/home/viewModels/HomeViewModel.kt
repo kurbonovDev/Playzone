@@ -1,4 +1,4 @@
-package playzone.tj.ui.home.viewModels
+package playzone.tj.ui.main.home.viewModels
 
 import androidx.lifecycle.ViewModel
 import playzone.tj.retrofit.models.GetUser
@@ -19,6 +19,8 @@ class HomeViewModel : ViewModel() {
 
     private var _userData: User? = null
     val userData: User get() = _userData!!
+
+
 
     suspend fun fetchEvents(token: String) {
         _data = mainApi.fetchEvent(headerValue = token, EventRequest(""))

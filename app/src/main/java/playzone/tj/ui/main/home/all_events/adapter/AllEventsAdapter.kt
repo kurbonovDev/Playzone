@@ -1,4 +1,4 @@
-package playzone.tj.ui.home.adapters
+package playzone.tj.ui.main.home.all_events.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
