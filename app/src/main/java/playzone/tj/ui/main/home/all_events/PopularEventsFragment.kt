@@ -55,7 +55,10 @@ class PopularEventsFragment() : Fragment() {
     private fun initRcView() {
         rcView = binding.rcViewEvents
         rcView.layoutManager = LinearLayoutManager(APP_ACTIVITY)
-        adapter = AllEventsAdapter(viewModel.eventData)
+        adapter = AllEventsAdapter(viewModel.eventData){
+            val action = PopularEventsFragmentDirections.actionPopularEventsFragmentToEventDetailFragment(it)
+            findNavController().navigate(action)
+        }
         rcView.adapter = adapter
 
     }
@@ -85,7 +88,7 @@ class PopularEventsFragment() : Fragment() {
                 binding.searchView.context,
                 R.anim.slide_searchview_gone
             )
-            binding.rcViewEvents.isVisible = true
+
 
             binding.searchView.visibility = View.GONE
             binding.tvCancel.visibility = View.GONE
@@ -97,9 +100,15 @@ class PopularEventsFragment() : Fragment() {
             binding.find.startAnimation(slideLeftToRight)
             binding.popularEventText.startAnimation(slideLeftToRight)
             binding.back.startAnimation(slideLeftToRight)
-            binding.searchView.setQuery("", false)
-            binding.searchView.clearFocus()
-            rcView.adapter = AllEventsAdapter(viewModel.eventData)
+           // binding.searchView.setQuery("", false)
+           // binding.searchView.clearFocus()
+            binding.nothingFind.visibility = View.GONE
+            binding.nothingFindText.visibility = View.GONE
+            binding.rcViewEvents.isVisible = true
+            rcView.adapter = AllEventsAdapter(viewModel.eventData){
+                val action = PopularEventsFragmentDirections.actionPopularEventsFragmentToEventDetailFragment(it)
+                findNavController().navigate(action)
+            }
 
         }
     }

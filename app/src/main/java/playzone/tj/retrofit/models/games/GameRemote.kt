@@ -1,5 +1,8 @@
 package playzone.tj.retrofit.models.games
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 
 data class GameRequest(
     val searchQuery: String
@@ -8,7 +11,7 @@ data class GameRequest(
 data class GameResponse(
     val result: List<GameDTO>
 )
-
+@Parcelize
 data class GameDTO(
     val gameID: String,
     val gameName: String,
@@ -19,4 +22,8 @@ data class GameDTO(
     var logo:String?,
     val downloadCount:Int,
     val rateGame:Int
+):Parcelable
+
+data class GetGameGenre(
+    val gameId:String
 )

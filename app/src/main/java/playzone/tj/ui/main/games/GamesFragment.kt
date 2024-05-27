@@ -47,7 +47,7 @@ class GamesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferences = APP_ACTIVITY.getSharedPreferences(STORAGE_KEY, Context.MODE_PRIVATE)
-        token=sharedPreferences.getString(TOKEN_KEY,"")
+        token = sharedPreferences.getString(TOKEN_KEY, "")
         getGames()
         binding.backHome.setOnClickListener {
             val action = GamesFragmentDirections.actionGamesFragmentToHomeFragment()
@@ -58,48 +58,69 @@ class GamesFragment : Fragment() {
     private fun getGames() {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                gameViewModel.fetchGames(token?:"")
+                gameViewModel.fetchGames(token ?: "")
                 gameList = gameViewModel.gameData
 
-                with(Dispatchers.Main){
+                with(Dispatchers.Main) {
 
-                    val (topThree,remainGames) =filterGames(gameList)
+                    val (topThree, remainGames) = filterGames(gameList)
                     initTopGames(topThree)
                     rcViewGame = binding.rcViewGame
                     rcViewGame.layoutManager = LinearLayoutManager(APP_ACTIVITY)
-                    rcViewGame.adapter = GamesAdapter(remainGames)
+                    rcViewGame.adapter = GamesAdapter(remainGames){
+                        val action = GamesFragmentDirections.actionGamesFragmentToGameDetailFragment(it)
+                        findNavController().navigate(action)
+                    }
                 }
 
-            }catch (e:Exception){
-               with(Dispatchers.Main){
-                   Toast.makeText(APP_ACTIVITY,e.message,Toast.LENGTH_SHORT)
+            } catch (e: Exception) {
+                with(Dispatchers.Main) {
+                    Toast.makeText(APP_ACTIVITY, e.message, Toast.LENGTH_SHORT)
 
-               }
+                }
             }
         }
     }
 
-    private fun initTopGames(list: List<GameDTO>){
-        if (list.size==3)
-        binding.tvNameTop1.text = list[0].gameName
-        Glide.with(requireActivity())
-            .load(list[0].image)
-            .error(R.drawable.ic_sword)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(binding.imTop1)
+    private fun initTopGames(list: List<GameDTO>) {
+        if (list.size == 3) {
+            binding.tvNameTop1.text = list[0].gameName
+            Glide.with(requireActivity())
+                .load(list[0].image)
+                .error(R.drawable.ic_sword)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(binding.imTop1)
+            binding.imTop1.setOnClickListener {
+                val game = list[0]
+                val action = GamesFragmentDirections.actionGamesFragmentToGameDetailFragment(game)
+                findNavController().navigate(action)
+            }
 
-        binding.tvNameTop2.text = list[1].gameName
-        Glide.with(requireActivity())
-            .load(list[1].image)
-            .error(R.drawable.ic_sword)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(binding.imTop2)
+            binding.tvNameTop2.text = list[1].gameName
+            Glide.with(requireActivity())
+                .load(list[1].image)
+                .error(R.drawable.ic_sword)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(binding.imTop2)
+            binding.imTop2.setOnClickListener {
+                val game = list[1]
+                val action = GamesFragmentDirections.actionGamesFragmentToGameDetailFragment(game)
+                findNavController().navigate(action)
+            }
 
-        Glide.with(requireActivity())
-            .load(list[2].image)
-            .error(R.drawable.ic_sword)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(binding.imTop3)
+            Glide.with(requireActivity())
+                .load(list[2].image)
+                .error(R.drawable.ic_sword)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(binding.imTop3)
+
+            binding.imTop3.setOnClickListener {
+                val game = list[2]
+                val action = GamesFragmentDirections.actionGamesFragmentToGameDetailFragment(game)
+                findNavController().navigate(action)
+            }
+        }
+
     }
 
 }

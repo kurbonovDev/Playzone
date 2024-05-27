@@ -49,8 +49,6 @@ class PointFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner){
 
-
-            //проблема в том что при выходе все создается заново
            when(navController.currentDestination?.id){
                 R.id.userInfoFragment->{
                     navController.popBackStack(R.id.homeFragment,false)
@@ -58,6 +56,15 @@ class PointFragment : Fragment() {
                 R.id.popularEventsFragment->{
                     navController.popBackStack(R.id.homeFragment,false)
                 }
+               R.id.gameDetailFragment->{
+                   navController.popBackStack(R.id.gamesFragment,false)
+               }
+               R.id.eventDetailFragment->{
+                   navController.popBackStack(R.id.homeFragment,false)
+               }
+               R.id.youTubeFragment->{
+                   navController.popBackStack(R.id.eventDetailFragment,false)
+               }
                 else->{
                     requireActivity().finish()
                 }

@@ -16,7 +16,7 @@ lateinit var interceptor: HttpLoggingInterceptor
 
 lateinit var mainApi: MainAPI
 
-var baseUrl = "http://192.168.0.157:8080"
+var baseUrl = "http://172.20.10.4:8080"
 
 const val STORAGE_KEY = "my_storage"
 const val TOKEN_KEY = "token"

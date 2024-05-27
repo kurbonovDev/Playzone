@@ -113,7 +113,10 @@ class HomeFragment : Fragment() {
                     rcViewEvents = binding.rcViewEvents
                     rcViewEvents.layoutManager =
                         LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                    rcViewEvents.adapter = EventAdapter(listEvents)
+                    rcViewEvents.adapter = EventAdapter(listEvents){
+                        val action = HomeFragmentDirections.actionHomeFragmentToEventDetailFragment(it)
+                        findNavController().navigate(action)
+                    }
                 }
 
             } catch (e: Exception) {

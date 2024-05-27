@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_homeFragment_to_popularEventsFragment"
             app:destination="@id/popularEventsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_eventDetailFragment"
+            app:destination="@id/eventDetailFragment" />
     </fragment>
 
     <fragment
@@ -31,7 +34,11 @@
         android:id="@+id/popularEventsFragment"
         android:name="playzone.tj.ui.main.home.all_events.PopularEventsFragment"
         android:label="fragment_popular_events"
-        tools:layout="@layout/fragment_popular_events" />
+        tools:layout="@layout/fragment_popular_events" >
+        <action
+            android:id="@+id/action_popularEventsFragment_to_eventDetailFragment"
+            app:destination="@id/eventDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/gamesFragment"
         android:name="playzone.tj.ui.main.games.GamesFragment"
@@ -40,5 +47,42 @@
         <action
             android:id="@+id/action_gamesFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_gamesFragment_to_gameDetailFragment"
+            app:destination="@id/gameDetailFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/gameDetailFragment"
+        android:name="playzone.tj.ui.main.games.game_detail.GameDetailFragment"
+        android:label="fragment_game_detail"
+        tools:layout="@layout/fragment_game_detail" >
+
+        <argument
+            android:name="gameDTO"
+            app:argType="playzone.tj.retrofit.models.games.GameDTO"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/eventDetailFragment"
+        android:name="playzone.tj.ui.main.home.event_detail.EventDetailFragment"
+        android:label="EventDetailFragment" >
+        <argument
+            android:name="eventDTO"
+            app:argType="playzone.tj.retrofit.models.events.EventDTO"
+            />
+        <action
+            android:id="@+id/action_eventDetailFragment_to_youTubeFragment"
+            app:destination="@id/youTubeFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/youTubeFragment"
+        android:name="playzone.tj.ui.main.home.event_detail.YouTubeFragment"
+        android:label="fragment_you_tube"
+        tools:layout="@layout/fragment_you_tube">
+        <argument
+            android:name="videoUrl"
+            app:argType="string" />
     </fragment>
 </navigation>

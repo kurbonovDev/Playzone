@@ -11,6 +11,7 @@ import playzone.tj.retrofit.models.forget_password.ForgetPasswordRemote
 import playzone.tj.retrofit.models.games.GameDTO
 import playzone.tj.retrofit.models.games.GameRequest
 import playzone.tj.retrofit.models.games.GameResponse
+import playzone.tj.retrofit.models.games.GetGameGenre
 import playzone.tj.retrofit.models.login.LoginReceiveRemote
 import playzone.tj.retrofit.models.registration.Otp
 import playzone.tj.retrofit.models.registration.RegisterReceiveRemote
@@ -64,4 +65,8 @@ interface MainAPI {
     @POST("games/fetch")
     suspend fun fetchGames(@Header("Bearer-Authorization") headerValue: String,
                            @Body gameRequest: GameRequest):List<GameDTO>
+
+
+    @POST("games/genres")
+    suspend fun fetchGameGenre(@Body getGameGenre: GetGameGenre):List<String>
 }

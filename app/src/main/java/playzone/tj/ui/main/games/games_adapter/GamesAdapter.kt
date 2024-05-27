@@ -9,7 +9,8 @@ import playzone.tj.R
 import playzone.tj.databinding.GameItemBinding
 import playzone.tj.retrofit.models.games.GameDTO
 
-class GamesAdapter(private val gameList: List<GameDTO>):RecyclerView.Adapter<GamesAdapter.GameViewHolder>() {
+class GamesAdapter(private val gameList: List<GameDTO>,private val listener: (item: GameDTO) -> Unit)
+    :RecyclerView.Adapter<GamesAdapter.GameViewHolder>() {
     class GameViewHolder(val binding:GameItemBinding):RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder {
@@ -33,6 +34,11 @@ class GamesAdapter(private val gameList: List<GameDTO>):RecyclerView.Adapter<Gam
             tvGameVersion.text = "Ver:${gameList[position].versionGame}"
             tvGameSize.text =gameList[position].sizeGame
             tvGameNumber.text = (position+4).toString()
+
+            root.setOnClickListener {
+                listener(gameList[position])
+            }
         }
+
     }
 }

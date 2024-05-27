@@ -1,5 +1,8 @@
 package playzone.tj.retrofit.models.events
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 data class EventRequest(
     val searchQuery: String
 )
@@ -7,7 +10,7 @@ data class EventRequest(
 data class EventResponse(
     val result: List<EventDTO>
 )
-
+@Parcelize
 data class EventDTO(
     val eventId:String,
     var gameId:String,
@@ -22,4 +25,4 @@ data class EventDTO(
     val format:String,
     var watcherCount:Int,
     val link:String
-)
+):Parcelable

@@ -9,7 +9,7 @@ import playzone.tj.R
 import playzone.tj.databinding.AllEventItemBinding
 import playzone.tj.retrofit.models.events.EventDTO
 
-class AllEventsAdapter(private var eventList: List<EventDTO>) :
+class AllEventsAdapter(private var eventList: List<EventDTO>,private val listener: (item: EventDTO) -> Unit) :
     RecyclerView.Adapter<AllEventsAdapter.AllEventViewHolder>() {
     class AllEventViewHolder(var binding: AllEventItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -31,6 +31,10 @@ class AllEventsAdapter(private var eventList: List<EventDTO>) :
                 .into(eventImage)
 
             eventName.text=eventList[position].eventName
+
+            root.setOnClickListener {
+                listener(eventList[position])
+            }
         }
     }
 
