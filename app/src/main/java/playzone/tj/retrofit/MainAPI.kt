@@ -5,6 +5,7 @@ import playzone.tj.retrofit.models.GetUser
 import playzone.tj.retrofit.models.TokenResponse
 import playzone.tj.retrofit.models.User
 import playzone.tj.retrofit.models.events.EventDTO
+import playzone.tj.retrofit.models.events.EventImagesRequest
 import playzone.tj.retrofit.models.events.EventRequest
 import playzone.tj.retrofit.models.events.EventResponse
 import playzone.tj.retrofit.models.forget_password.ForgetPasswordRemote
@@ -69,4 +70,10 @@ interface MainAPI {
 
     @POST("games/genres")
     suspend fun fetchGameGenre(@Body getGameGenre: GetGameGenre):List<String>
+
+    @POST("events/fetch/images")
+    suspend fun fetchEventImages(@Body eventImagesRequest: EventImagesRequest):List<String>
+
+
+
 }

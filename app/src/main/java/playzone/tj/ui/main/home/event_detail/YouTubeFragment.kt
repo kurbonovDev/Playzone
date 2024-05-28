@@ -1,25 +1,22 @@
 package playzone.tj.ui.main.home.event_detail
 
+import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebSettings
 import android.webkit.WebViewClient
 import androidx.navigation.fragment.navArgs
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import playzone.tj.R
 import playzone.tj.databinding.FragmentYouTubeBinding
-import playzone.tj.retrofit.models.events.EventDTO
 
 
 class YouTubeFragment : Fragment() {
 
     private lateinit var binding: FragmentYouTubeBinding
     private val args: YouTubeFragmentArgs by navArgs()
-    private var url: String? = null
+    private var videoId: String? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,17 +26,38 @@ class YouTubeFragment : Fragment() {
     }
 
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        url = args.videoUrl
-        binding.youtubePlayerView
-        lifecycle.addObserver(binding.youtubePlayerView)
-        binding.youtubePlayerView.addYouTubePlayerListener(object :AbstractYouTubePlayerListener(){
-            override fun onReady(youTubePlayer: YouTubePlayer) {
-                super.onReady(youTubePlayer)
-                youTubePlayer.loadVideo(url!!,0f)
+        videoId = args.videoUrl
+        val url = "https://www.youtube.com/embed/$videoId"
+        val videoHtml = """
+    <html>
+    <head>
+        <style>
+            body, html {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                overflow: hidden;
             }
-        })
+            .custom-iframe {
+                border: none;
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <iframe class="custom-iframe" src="$url" title="YouTube video player" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        allowfullscreen></iframe>
+    </body>
+    </html>
+""".trimIndent()
+        binding.webView.loadData(videoHtml,"text/html","utf-8")
+        binding.webView.settings.javaScriptEnabled = true
+        binding.webView.webViewClient = WebViewClient()
 
     }
 

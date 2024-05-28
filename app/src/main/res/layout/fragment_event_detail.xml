@@ -86,13 +86,15 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="24dp">
+            >
 
 
             <TextView
                 android:id="@+id/eventDetailName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="@color/white"
@@ -196,7 +198,7 @@
 
             <TextView
                 android:id="@+id/tv_event_desc"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:alpha="0.6"
@@ -207,11 +209,27 @@
                 tools:text="@tools:sample/lorem/random" />
 
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcViewEventImages"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="18dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="24dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_event_desc"
+                tools:listitem="@layout/event_detail_image" />
+
             <TextView
                 android:id="@+id/btn_watch_event"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="51dp"
+                android:layout_marginEnd="24dp"
                 android:background="@drawable/background_textview_btn"
                 android:gravity="center"
                 android:text="Watch"
@@ -219,7 +237,7 @@
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="@+id/tv_event_desc"
                 app:layout_constraintStart_toStartOf="@+id/tv_event_desc"
-                app:layout_constraintTop_toBottomOf="@+id/tv_event_desc" />
+                app:layout_constraintTop_toBottomOf="@+id/rcViewEventImages" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

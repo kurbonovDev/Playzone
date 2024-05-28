@@ -26,3 +26,8 @@ data class EventDTO(
     var watcherCount:Int,
     val link:String
 ):Parcelable
+
+
+data class EventImagesRequest(
+    val eventId: String
+)

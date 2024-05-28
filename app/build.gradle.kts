@@ -81,8 +81,10 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 
-    implementation ("com.google.android.material:material:1.0.0")
+    implementation ("com.google.android.material:material:1.12.0")
 
     implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+
+
 
 }

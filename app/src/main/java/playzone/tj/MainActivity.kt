@@ -8,6 +8,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.findNavController
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import playzone.tj.databinding.ActivityMainBinding
 import playzone.tj.retrofit.MainAPI
 import playzone.tj.ui.main.PointFragment
 import playzone.tj.ui.main.games.GamesFragment
@@ -26,11 +27,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Thread.sleep(500)
         installSplashScreen()
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         sharedPreferences = getSharedPreferences("my_storage", Context.MODE_PRIVATE)
         APP_ACTIVITY = this
 
@@ -49,15 +52,16 @@ class MainActivity : AppCompatActivity() {
         mainApi = retrofit.create(MainAPI::class.java)
 
         if (sharedPreferences.getBoolean("isRegistered", false)) {
-            if(sharedPreferences.getBoolean("isChosenGenre",false)){
-                replaceFragment(PointFragment(),false)
-            }else{
-                replaceFragment(ChooseGenreFragment(),false)
+            if (sharedPreferences.getBoolean("isChosenGenre", false)) {
+                replaceFragment(PointFragment(), false)
+            } else {
+                replaceFragment(ChooseGenreFragment(), false)
             }
-        }else{
+        } else {
 
             replaceFragment(MainFragment(), false)
         }
+
 
     }
 }

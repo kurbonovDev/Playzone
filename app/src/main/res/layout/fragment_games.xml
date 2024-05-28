@@ -26,7 +26,6 @@
         android:layout_marginEnd="24dp"
         android:background="@drawable/background_for_searchview"
         android:theme="@style/SearchView"
-
         app:circularflow_radiusInDP="16dp"
         app:iconifiedByDefault="false"
         app:layout_constraintBottom_toBottomOf="@+id/back_home"
@@ -34,209 +33,219 @@
         app:layout_constraintStart_toEndOf="@+id/back_home"
         app:layout_constraintTop_toTopOf="@+id/back_home"
         app:queryBackground="@android:color/transparent"
-        app:queryHint="Search events" />
+        app:queryHint="Search games" />
 
 
-    <View
-        android:id="@+id/top_2"
-        android:layout_width="98dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="114dp"
-        android:background="@drawable/bg_game_top"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainBlock"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/searchView"
         app:layout_constraintStart_toStartOf="@+id/back_home"
-        app:layout_constraintTop_toBottomOf="@+id/back_home" />
+        app:layout_constraintTop_toBottomOf="@+id/searchView">
 
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="2dp"
-        android:src="@drawable/top2"
-        app:layout_constraintBottom_toTopOf="@+id/block2"
-        app:layout_constraintEnd_toEndOf="@+id/block2"
-        app:layout_constraintStart_toStartOf="@+id/block2" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/block2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="59dp"
-        app:cardElevation="0dp"
-        app:cardCornerRadius="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/top_2"
-        app:layout_constraintEnd_toEndOf="@+id/top_2"
-        app:layout_constraintStart_toStartOf="@+id/top_2">
+        <View
+            android:id="@+id/top_2"
+            android:layout_width="98dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="114dp"
+            android:background="@drawable/bg_game_top"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/im_top_2"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerCrop"
-            tools:src="@tools:sample/avatars" />
-    </androidx.cardview.widget.CardView>
+            android:id="@+id/imageView6"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginBottom="2dp"
+            android:src="@drawable/top2"
+            app:layout_constraintBottom_toTopOf="@+id/block2"
+            app:layout_constraintEnd_toEndOf="@+id/block2"
+            app:layout_constraintStart_toStartOf="@+id/block2" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/block2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="59dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/top_2"
+            app:layout_constraintEnd_toEndOf="@+id/top_2"
+            app:layout_constraintStart_toStartOf="@+id/top_2">
+
+            <ImageView
+                android:id="@+id/im_top_2"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                tools:src="@tools:sample/avatars" />
+        </androidx.cardview.widget.CardView>
 
 
-    <TextView
-        android:id="@+id/tv_name_top_2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:maxLines="1"
-        android:textAlignment="center"
-        android:ellipsize="end"
-        tools:text="@tools:sample/lorem/random"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/top_2"
-        app:layout_constraintStart_toStartOf="@+id/top_2"
-        app:layout_constraintTop_toBottomOf="@+id/block2" />
+        <TextView
+            android:id="@+id/tv_name_top_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/top_2"
+            app:layout_constraintStart_toStartOf="@+id/top_2"
+            app:layout_constraintTop_toBottomOf="@+id/block2"
+            tools:text="@tools:sample/lorem/random" />
 
-    <TextView
-        android:id="@+id/btn_download_top_2"
-        android:layout_width="53dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/background_textview_btn"
-        android:padding="1dp"
-        android:paddingHorizontal="4dp"
-        android:text="Download"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textFontWeight="400"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/top_2"
-        app:layout_constraintEnd_toEndOf="@+id/tv_name_top_2"
-        app:layout_constraintStart_toStartOf="@+id/tv_name_top_2" />
+        <TextView
+            android:id="@+id/btn_download_top_2"
+            android:layout_width="53dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/background_textview_btn"
+            android:padding="1dp"
+            android:paddingHorizontal="4dp"
+            android:text="Download"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textFontWeight="400"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/top_2"
+            app:layout_constraintEnd_toEndOf="@+id/tv_name_top_2"
+            app:layout_constraintStart_toStartOf="@+id/tv_name_top_2" />
 
-    <View
-        android:id="@+id/top_1"
-        android:layout_width="99dp"
-        android:layout_height="104dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="90dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/bg_game_top"
-        app:layout_constraintEnd_toStartOf="@+id/top_3"
-        app:layout_constraintStart_toEndOf="@+id/top_2"
-        app:layout_constraintTop_toBottomOf="@+id/back_home" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
-        android:layout_marginBottom="2dp"
-        android:src="@drawable/top1"
-        app:layout_constraintBottom_toTopOf="@+id/block1"
-        app:layout_constraintEnd_toEndOf="@+id/block1"
-        app:layout_constraintStart_toStartOf="@+id/block1" />
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/block1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="83dp"
-        app:cardElevation="0dp"
-        app:cardCornerRadius="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/top_1"
-        app:layout_constraintEnd_toEndOf="@+id/top_1"
-        app:layout_constraintStart_toStartOf="@+id/top_1">
-
-        <ImageView
-            android:id="@+id/im_top_1"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerCrop"
-            tools:src="@tools:sample/avatars" />
-    </androidx.cardview.widget.CardView>
-
-
-    <TextView
-        android:id="@+id/tv_name_top_1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ellipsize="end"
-        android:maxLines="2"
-        tools:text="@tools:sample/lorem/random"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@+id/top_1"
-        app:layout_constraintStart_toStartOf="@+id/top_1"
-        app:layout_constraintTop_toBottomOf="@+id/block1" />
-
-    <TextView
-        android:id="@+id/btn_download_top_1"
-        android:layout_width="53dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/background_textview_btn"
-        android:padding="1dp"
-        android:paddingHorizontal="4dp"
-        android:text="Download"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textFontWeight="400"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/top_1"
-        app:layout_constraintEnd_toEndOf="@+id/tv_name_top_1"
-        app:layout_constraintStart_toStartOf="@+id/tv_name_top_1" />
-
-    <View
-        android:id="@+id/top_3"
-        android:layout_width="98dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="130dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/bg_game_top"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back_home" />
-
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="33dp"
-        android:layout_height="33dp"
-        android:layout_marginBottom="2dp"
-        android:src="@drawable/top3"
-        app:layout_constraintBottom_toTopOf="@+id/block3"
-        app:layout_constraintEnd_toEndOf="@+id/block3"
-        app:layout_constraintStart_toStartOf="@+id/block3" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/block3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="43dp"
-        app:cardElevation="0dp"
-        app:cardCornerRadius="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/top_3"
-        app:layout_constraintEnd_toEndOf="@+id/top_3"
-        app:layout_constraintStart_toStartOf="@+id/top_3">
+        <View
+            android:id="@+id/top_1"
+            android:layout_width="99dp"
+            android:layout_height="104dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="90dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_game_top"
+            app:layout_constraintEnd_toStartOf="@+id/top_3"
+            app:layout_constraintStart_toEndOf="@+id/top_2"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/im_top_3"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerCrop"
-            tools:src="@tools:sample/avatars" />
+            android:id="@+id/imageView7"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginBottom="2dp"
+            android:src="@drawable/top1"
+            app:layout_constraintBottom_toTopOf="@+id/block1"
+            app:layout_constraintEnd_toEndOf="@+id/block1"
+            app:layout_constraintStart_toStartOf="@+id/block1" />
 
-    </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/block1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="83dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/top_1"
+            app:layout_constraintEnd_toEndOf="@+id/top_1"
+            app:layout_constraintStart_toStartOf="@+id/top_1">
+
+            <ImageView
+                android:id="@+id/im_top_1"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                tools:src="@tools:sample/avatars" />
+        </androidx.cardview.widget.CardView>
 
 
-    <TextView
-        android:id="@+id/btn_download_top_3"
-        android:layout_width="53dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/background_textview_btn"
-        android:padding="1dp"
-        android:paddingHorizontal="4dp"
-        android:text="Download"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textFontWeight="400"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/top_3"
-        app:layout_constraintEnd_toEndOf="@+id/block3"
-        app:layout_constraintStart_toStartOf="@+id/block3" />
+        <TextView
+            android:id="@+id/tv_name_top_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@+id/top_1"
+            app:layout_constraintStart_toStartOf="@+id/top_1"
+            app:layout_constraintTop_toBottomOf="@+id/block1"
+            tools:text="@tools:sample/lorem/random" />
+
+        <TextView
+            android:id="@+id/btn_download_top_1"
+            android:layout_width="53dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/background_textview_btn"
+            android:padding="1dp"
+            android:paddingHorizontal="4dp"
+            android:text="Download"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textFontWeight="400"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/top_1"
+            app:layout_constraintEnd_toEndOf="@+id/tv_name_top_1"
+            app:layout_constraintStart_toStartOf="@+id/tv_name_top_1" />
+
+        <View
+            android:id="@+id/top_3"
+            android:layout_width="98dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="130dp"
+            android:background="@drawable/bg_game_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginBottom="2dp"
+            android:src="@drawable/top3"
+            app:layout_constraintBottom_toTopOf="@+id/block3"
+            app:layout_constraintEnd_toEndOf="@+id/block3"
+            app:layout_constraintStart_toStartOf="@+id/block3" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/block3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="43dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/top_3"
+            app:layout_constraintEnd_toEndOf="@+id/top_3"
+            app:layout_constraintStart_toStartOf="@+id/top_3">
+
+            <ImageView
+                android:id="@+id/im_top_3"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                tools:src="@tools:sample/avatars" />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/btn_download_top_3"
+            android:layout_width="53dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/background_textview_btn"
+            android:padding="1dp"
+            android:paddingHorizontal="4dp"
+            android:text="Download"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textFontWeight="400"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/top_3"
+            app:layout_constraintEnd_toEndOf="@+id/block3"
+            app:layout_constraintStart_toStartOf="@+id/block3" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcViewGame"
@@ -248,8 +257,37 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_1"
+        app:layout_constraintTop_toBottomOf="@+id/mainBlock"
         tools:listitem="@layout/game_item" />
+
+
+    <ImageView
+        android:id="@+id/nothingFind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/nothing_find"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/rcViewGame"
+        app:layout_constraintEnd_toEndOf="@+id/rcViewGame"
+        app:layout_constraintStart_toStartOf="@+id/rcViewGame"
+        app:layout_constraintTop_toTopOf="@+id/rcViewGame" />
+
+    <TextView
+        android:id="@+id/nothingFindText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="64dp"
+        android:gravity="center"
+        android:maxLines="2"
+        android:text="Sorry we couldn’t find any matches for “Wadidaw”"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nothingFind" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

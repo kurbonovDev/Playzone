@@ -3,11 +3,14 @@ package playzone.tj.ui.main.games
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import playzone.tj.R
 import playzone.tj.databinding.FragmentGamesBinding
+import playzone.tj.retrofit.models.events.EventDTO
 import playzone.tj.retrofit.models.games.GameDTO
 import playzone.tj.ui.main.games.games_adapter.GamesAdapter
 import playzone.tj.ui.main.games.viewModels.GameViewModel
@@ -33,9 +37,10 @@ class GamesFragment : Fragment() {
     private lateinit var rcViewGame: RecyclerView
     private val gameViewModel: GameViewModel by activityViewModels()
     private lateinit var sharedPreferences: SharedPreferences
-
+    private lateinit var adapter: GamesAdapter
     private var gameList = listOf<GameDTO>()
     private var token: String? = ""
+    private var isInitialQuerySet = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,11 +53,14 @@ class GamesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferences = APP_ACTIVITY.getSharedPreferences(STORAGE_KEY, Context.MODE_PRIVATE)
         token = sharedPreferences.getString(TOKEN_KEY, "")
+        binding.searchView.clearFocus()
         getGames()
+        findGame()
         binding.backHome.setOnClickListener {
             val action = GamesFragmentDirections.actionGamesFragmentToHomeFragment()
             findNavController().navigate(action)
         }
+        searchGame()
     }
 
     private fun getGames() {
@@ -60,19 +68,9 @@ class GamesFragment : Fragment() {
             try {
                 gameViewModel.fetchGames(token ?: "")
                 gameList = gameViewModel.gameData
-
                 with(Dispatchers.Main) {
-
-                    val (topThree, remainGames) = filterGames(gameList)
-                    initTopGames(topThree)
-                    rcViewGame = binding.rcViewGame
-                    rcViewGame.layoutManager = LinearLayoutManager(APP_ACTIVITY)
-                    rcViewGame.adapter = GamesAdapter(remainGames){
-                        val action = GamesFragmentDirections.actionGamesFragmentToGameDetailFragment(it)
-                        findNavController().navigate(action)
-                    }
+                    initRcView()
                 }
-
             } catch (e: Exception) {
                 with(Dispatchers.Main) {
                     Toast.makeText(APP_ACTIVITY, e.message, Toast.LENGTH_SHORT)
@@ -80,6 +78,43 @@ class GamesFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun searchGame() {
+        binding.searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.mainBlock.visibility = View.GONE
+                binding.rcViewGame.isVisible = false
+                binding.root.setOnClickListener {
+                    binding.searchView.clearFocus()
+                    val (topThree, remainGames) = filterGames(gameList)
+                    initTopGames(topThree)
+                    adapter.setFilterList(remainGames,false)
+                    Log.d("MyTag","GamesFragment:search_game")
+                    binding.nothingFind.visibility = View.GONE
+                    binding.nothingFindText.visibility = View.GONE
+                }
+
+            } else {
+                binding.mainBlock.visibility = View.VISIBLE
+                binding.rcViewGame.isVisible = true
+            }
+        }
+
+    }
+
+    private fun initRcView() {
+        val (topThree, remainGames) = filterGames(gameList)
+        initTopGames(topThree)
+        adapter = GamesAdapter(remainGames,false) {
+            val action =
+                GamesFragmentDirections.actionGamesFragmentToGameDetailFragment(it)
+            findNavController().navigate(action)
+        }
+        rcViewGame = binding.rcViewGame
+        rcViewGame.layoutManager = LinearLayoutManager(APP_ACTIVITY)
+        rcViewGame.adapter = adapter
+        Log.d("MyTag","GamesFragment:initRcView")
     }
 
     private fun initTopGames(list: List<GameDTO>) {
@@ -121,6 +156,54 @@ class GamesFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun filterList(query: String?) {
+
+        if (query != null) {
+            val filteredList = ArrayList<GameDTO>()
+            for (i in gameViewModel.gameData) {
+                if (i.gameName.contains(query, ignoreCase = true)) {
+                    filteredList.add(i)
+                }
+            }
+            if (filteredList.isEmpty()) {
+                binding.rcViewGame.isVisible = false
+                binding.nothingFind.visibility = View.VISIBLE
+                binding.nothingFindText.visibility = View.VISIBLE
+                binding.nothingFindText.text = "Sorry we couldn’t find any game for “$query”"
+                //adapter.setFilterList(filteredList,false)
+                Log.d("MyTag","GamesFragment:filteredList.empty")
+            } else {
+                binding.rcViewGame.isVisible = true
+                binding.nothingFind.visibility = View.GONE
+                binding.nothingFindText.visibility = View.GONE
+                val (topThree, remainGames) = filterGames(filteredList)
+                adapter.setFilterList(filteredList,true)
+                Log.d("MyTag","GamesFragment:filteredList.not_empty")
+            }
+        }
+    }
+
+    private fun findGame() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Log.d("MyTag","GamesFragment:onQueryTextSubmit")
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // Игнорировать первый вызов после восстановления состояния
+                if (!isInitialQuerySet) {
+                    isInitialQuerySet = true
+                    return true
+                }
+                Log.d("MyTag", "GamesFragment:onQueryTextChange")
+                filterList(newText)
+                if (newText?.length==0) binding.rcViewGame.isVisible = false
+                return true
+            }
+        })
     }
 
 }

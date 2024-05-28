@@ -21,6 +21,7 @@ class PointFragment : Fragment() {
         R.id.homeFragment,
         R.id.gamesFragment
     )
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,36 +37,40 @@ class PointFragment : Fragment() {
     }
 
 
-
-    private fun initBottomBar(){
+    private fun initBottomBar() {
         val navHostFragment = childFragmentManager
             .findFragmentById(R.id.container) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             binding.menuNbar.isVisible = topIdSet.contains(destination.id)
         }
         NavigationUI.setupWithNavController(binding.menuNbar, navController)
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner){
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
 
-           when(navController.currentDestination?.id){
-                R.id.userInfoFragment->{
-                    navController.popBackStack(R.id.homeFragment,false)
+            when (navController.currentDestination?.id) {
+                R.id.userInfoFragment -> {
+                    navController.popBackStack(R.id.homeFragment, false)
                 }
-                R.id.popularEventsFragment->{
-                    navController.popBackStack(R.id.homeFragment,false)
+
+                R.id.popularEventsFragment -> {
+                    navController.popBackStack(R.id.homeFragment, false)
                 }
-               R.id.gameDetailFragment->{
-                   navController.popBackStack(R.id.gamesFragment,false)
-               }
-               R.id.eventDetailFragment->{
-                   navController.popBackStack(R.id.homeFragment,false)
-               }
-               R.id.youTubeFragment->{
-                   navController.popBackStack(R.id.eventDetailFragment,false)
-               }
-                else->{
+
+                R.id.gameDetailFragment -> {
+                    navController.popBackStack(R.id.gamesFragment, false)
+                }
+
+                R.id.eventDetailFragment -> {
+                    navController.popBackStack(R.id.homeFragment, false)
+                }
+
+                R.id.youTubeFragment -> {
+                    navController.popBackStack(R.id.eventDetailFragment, false)
+                }
+
+                else -> {
                     requireActivity().finish()
                 }
             }

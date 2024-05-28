@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -56,7 +57,7 @@ class RegisterFragment : Fragment() {
             )
             binding.progressBar2.visibility = View.VISIBLE
             binding.btnCreateAccount.isEnabled = false
-            CoroutineScope(Dispatchers.IO).launch {
+            viewLifecycleOwner.lifecycleScope.launch {
                 try {
                     mainApi.registerNewUser(userInfoForRegister)
                     replaceFragment(OtpScreenFragment(userInfoForRegister))
