@@ -68,10 +68,11 @@ class EventDetailFragment : Fragment() {
 
             viewLifecycleOwner.lifecycleScope.launch {
                 if (eventDetailModel.eventData.isEmpty())
-                eventDetailModel.fetchEventImages(event!!.eventId)
-                with(Dispatchers.Main){
+                    eventDetailModel.fetchEventImages(event!!.eventId)
+                with(Dispatchers.Main) {
                     rcViewEventImages = binding.rcViewEventImages
-                    rcViewEventImages.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+                    rcViewEventImages.layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                     rcViewEventImages.adapter = EventDetailImageAdapter(eventDetailModel.eventData)
 
                 }

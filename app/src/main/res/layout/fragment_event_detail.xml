@@ -46,26 +46,33 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/imageView11"
-                    android:layout_width="21dp"
-                    android:layout_height="21dp"
-                    android:layout_marginStart="10dp"
-                    android:src="@drawable/ic_eye"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView378"
-                    app:layout_constraintStart_toEndOf="@+id/imageView378"
-                    app:layout_constraintTop_toTopOf="@+id/imageView378" />
-
-                <TextView
-                    android:id="@+id/tv_watcher_count"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="12345"
-                    android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView11"
-                    app:layout_constraintStart_toEndOf="@+id/imageView11"
-                    app:layout_constraintTop_toTopOf="@+id/imageView11" />
+                    android:background="@drawable/bg_watcer_count"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView378"
+                    app:layout_constraintStart_toEndOf="@+id/imageView378"
+                    app:layout_constraintTop_toTopOf="@+id/imageView378">
+
+                    <ImageView
+                        android:id="@+id/imageView11"
+                        android:layout_width="21dp"
+                        android:layout_height="21dp"
+                        android:layout_marginStart="10dp"
+                        android:src="@drawable/ic_eye"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_watcher_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:text="12345"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -85,8 +92,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
 
             <TextView
@@ -122,8 +128,8 @@
                 android:layout_width="154dp"
                 android:layout_height="39dp"
                 android:layout_marginTop="30dp"
-                app:cardCornerRadius="20dp"
                 app:cardBackgroundColor="@color/main_screen_color"
+                app:cardCornerRadius="20dp"
                 app:layout_constraintStart_toStartOf="@+id/tv_event_format"
                 app:layout_constraintTop_toBottomOf="@+id/tv_event_format">
 
@@ -161,8 +167,8 @@
                 android:layout_width="154dp"
                 android:layout_height="39dp"
                 android:layout_marginTop="30dp"
-                app:cardCornerRadius="20dp"
                 app:cardBackgroundColor="@color/main_screen_color"
+                app:cardCornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="@+id/eventDetailName"
                 app:layout_constraintTop_toBottomOf="@+id/tv_event_format">
 

@@ -24,69 +24,101 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/login"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/sec_input_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
         android:layout_marginStart="24dp"
-        android:maxLength="25"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/background_edittext"
-        android:ems="10"
-        android:inputType="text"
-        android:paddingHorizontal="20dp"
-        android:hint="Enter your login"
-        android:textColorHint="#696C75"
-        android:textColor="#696C75"
-        android:textSize="16sp"
+        app:boxStrokeColor="#696C75"
+        app:boxStrokeErrorColor="#696C75"
+        app:boxStrokeWidth="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:ems="10"
+            android:hint="Enter your login"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textColorHint="#696C75"
+            android:textSize="16sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:maxLength="50"
-        android:background="@drawable/background_edittext"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:paddingHorizontal="20dp"
-        android:hint="Email address"
-        android:textColorHint="#696C75"
-        android:textColor="#696C75"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login" />
 
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/thre_input_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/background_edittext"
-        android:ems="10"
-        android:maxLength="25"
-        android:inputType="textVisiblePassword"
-        android:paddingHorizontal="20dp"
-        android:hint="Password"
-        android:drawableEnd="@drawable/eyeclosed"
-        android:textColorHint="#696C75"
-        android:textColor="#696C75"
-        android:textSize="16sp"
+        app:boxStrokeColor="#696C75"
+        app:boxStrokeErrorColor="#696C75"
+        app:boxStrokeWidth="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintTop_toBottomOf="@+id/sec_input_container"  >
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:ems="10"
+            android:hint="Email address"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textColorHint="#696C75"
+            android:textSize="16sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/first_input_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/background_edittext"
+        app:boxStrokeColor="#696C75"
+        app:boxStrokeErrorColor="#696C75"
+        app:boxStrokeWidth="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/thre_input_container"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="Password"
+            android:textColor="@color/white"
+            android:inputType="textPassword"
+            android:maxLines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/btn_create_account"
@@ -102,7 +134,7 @@
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/first_input_container" />
 
     <ProgressBar
         android:id="@+id/progressBar2"
@@ -114,64 +146,6 @@
         app:layout_constraintEnd_toEndOf="@+id/btn_create_account"
         app:layout_constraintStart_toStartOf="@+id/btn_create_account"
         app:layout_constraintTop_toTopOf="@+id/btn_create_account" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/btn_create_account"
-        app:layout_constraintStart_toStartOf="@+id/btn_create_account"
-        app:layout_constraintTop_toBottomOf="@+id/btn_create_account">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/background_edittext"
-            android:ems="10"
-            android:hint="Enter your login"
-            android:inputType="text"
-            android:maxLength="25"
-            android:paddingHorizontal="20dp"
-            android:textColor="#696C75"
-            android:textColorHint="#696C75"
-            android:textSize="16sp" />
-
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/btn_create_account"
-        app:layout_constraintStart_toStartOf="@+id/btn_create_account"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-        app:passwordToggleEnabled="true">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/background_edittext"
-            android:ems="10"
-            android:hint="Enter your login"
-            android:inputType="textPassword"
-            android:maxLength="25"
-            android:paddingHorizontal="20dp"
-            android:textColor="#696C75"
-            android:textColorHint="#696C75"
-            android:textSize="16sp" />
-
-
-    </com.google.android.material.textfield.TextInputLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

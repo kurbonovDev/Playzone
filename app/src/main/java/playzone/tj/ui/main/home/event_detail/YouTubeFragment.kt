@@ -29,6 +29,7 @@ class YouTubeFragment : Fragment() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         videoId = args.videoUrl
         val url = "https://www.youtube.com/embed/$videoId"
         val videoHtml = """
@@ -55,13 +56,17 @@ class YouTubeFragment : Fragment() {
     </body>
     </html>
 """.trimIndent()
-        binding.webView.loadData(videoHtml,"text/html","utf-8")
+        binding.webView.loadData(videoHtml, "text/html", "utf-8")
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.webViewClient = WebViewClient()
 
     }
 
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+    }
 
 
 }

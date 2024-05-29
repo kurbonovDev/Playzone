@@ -24,6 +24,7 @@ import playzone.tj.utils.replaceFragment
 import playzone.tj.utils.retrofit
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
@@ -42,6 +43,9 @@ class MainActivity : AppCompatActivity() {
 
         client = OkHttpClient.Builder()
             .addInterceptor(interceptor)
+            .connectTimeout(60, TimeUnit.SECONDS) // Устанавливает таймаут на соединение
+            .writeTimeout(60, TimeUnit.SECONDS)   // Устанавливает таймаут на запись
+            .readTimeout(60, TimeUnit.SECONDS)    // Устанавливает таймаут на чтение
             .build()
 
         retrofit = Retrofit.Builder()

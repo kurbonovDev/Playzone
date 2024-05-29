@@ -6,15 +6,14 @@ import playzone.tj.retrofit.models.events.EventImagesRequest
 import playzone.tj.retrofit.models.events.EventRequest
 import playzone.tj.utils.mainApi
 
-class EventDetailViewModel:ViewModel() {
+class EventDetailViewModel : ViewModel() {
     private var _data = listOf<String>()
     val eventData: List<String> get() = _data
 
 
-
     suspend fun fetchEventImages(eventId: String) {
         if (_data.isEmpty())
-        _data = mainApi.fetchEventImages(EventImagesRequest(eventId))
+            _data = mainApi.fetchEventImages(EventImagesRequest(eventId))
     }
 
 }

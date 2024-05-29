@@ -37,4 +37,16 @@
         <item name="postSplashScreenTheme">@style/Base.Theme.Playzone</item>
 
     </style>
+
+    <style name="RoundedTextInputLayout">
+        <item name="cornerSize">16dp</item>
+    </style>
+
+
+    <style name="CustomTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <!-- Normal state border color -->
+        <item name="boxStrokeColor">#00FFFFFF</item>
+        <!-- Error state border color -->
+        <item name="boxStrokeErrorColor">#00FFFFFF</item>
+    </style>
 </resources>

@@ -1,5 +1,7 @@
 package playzone.tj.ui.main.home.user_info
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,6 +23,8 @@ import playzone.tj.ui.main.home.HomeFragment
 import playzone.tj.ui.main.home.HomeFragmentDirections
 import playzone.tj.ui.main.home.viewModels.HomeViewModel
 import playzone.tj.utils.APP_ACTIVITY
+import playzone.tj.utils.ExitDialog
+import playzone.tj.utils.STORAGE_KEY
 import playzone.tj.utils.mainApi
 import playzone.tj.utils.replaceFragment
 
@@ -29,6 +33,7 @@ class UserInfoFragment() : Fragment() {
 
     private lateinit var binding: FragmentFillUserInfoBinding
     private val homeViewModel: HomeViewModel by activityViewModels()
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,8 +45,20 @@ class UserInfoFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedPreferences = APP_ACTIVITY.getSharedPreferences(STORAGE_KEY, Context.MODE_PRIVATE)
         initFields()
         updateUser()
+
+
+        binding.btnExit.setOnClickListener {
+            ExitDialog.showDialog(requireContext(),object :ExitDialog.Listener{
+                override fun onClick() {
+                    sharedPreferences.edit().clear().apply()
+                    val action  = UserInfoFragmentDirections.actionUserInfoFragmentToMainFragment()
+                    findNavController().navigate(action)
+                }
+            })
+        }
     }
 
 

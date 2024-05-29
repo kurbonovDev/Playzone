@@ -54,7 +54,7 @@
         android:paddingHorizontal="20dp"
         android:hint="Email address"
         android:textColorHint="#696C75"
-        android:textColor="#696C75"
+        android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

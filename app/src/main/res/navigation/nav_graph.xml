@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_userInfoFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_userInfoFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/popularEventsFragment"
@@ -85,4 +88,9 @@
             android:name="videoUrl"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="playzone.tj.ui.main_screen.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" />
 </navigation>

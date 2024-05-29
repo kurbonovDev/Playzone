@@ -40,20 +40,22 @@ class GamesFragment : Fragment() {
     private lateinit var adapter: GamesAdapter
     private var gameList = listOf<GameDTO>()
     private var token: String? = ""
-    private var isInitialQuerySet = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.d("MyTag","GamesFragment:onCreateView")
         binding = FragmentGamesBinding.inflate(layoutInflater, container, false)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("MyTag","GamesFragment:onViewCreated")
         sharedPreferences = APP_ACTIVITY.getSharedPreferences(STORAGE_KEY, Context.MODE_PRIVATE)
         token = sharedPreferences.getString(TOKEN_KEY, "")
-        binding.searchView.clearFocus()
+        binding.searchView.setQuery("", false)
         getGames()
         findGame()
         binding.backHome.setOnClickListener {
@@ -63,7 +65,9 @@ class GamesFragment : Fragment() {
         searchGame()
     }
 
+
     private fun getGames() {
+        Log.d("MyTag","GamesFragment:getGame")
         viewLifecycleOwner.lifecycleScope.launch {
             try {
                 gameViewModel.fetchGames(token ?: "")
@@ -86,6 +90,8 @@ class GamesFragment : Fragment() {
                 binding.mainBlock.visibility = View.GONE
                 binding.rcViewGame.isVisible = false
                 binding.root.setOnClickListener {
+                    binding.mainBlock.visibility = View.VISIBLE
+                    binding.rcViewGame.isVisible = true
                     binding.searchView.clearFocus()
                     val (topThree, remainGames) = filterGames(gameList)
                     initTopGames(topThree)
@@ -95,9 +101,6 @@ class GamesFragment : Fragment() {
                     binding.nothingFindText.visibility = View.GONE
                 }
 
-            } else {
-                binding.mainBlock.visibility = View.VISIBLE
-                binding.rcViewGame.isVisible = true
             }
         }
 
@@ -117,7 +120,9 @@ class GamesFragment : Fragment() {
         Log.d("MyTag","GamesFragment:initRcView")
     }
 
-    private fun initTopGames(list: List<GameDTO>) {
+    private fun initTopGames(list: List<GameDTO>){
+        Log.d("MyTag","GamesFragment:initTopGames")
+
         if (list.size == 3) {
             binding.tvNameTop1.text = list[0].gameName
             Glide.with(requireActivity())
@@ -172,7 +177,6 @@ class GamesFragment : Fragment() {
                 binding.nothingFind.visibility = View.VISIBLE
                 binding.nothingFindText.visibility = View.VISIBLE
                 binding.nothingFindText.text = "Sorry we couldn’t find any game for “$query”"
-                //adapter.setFilterList(filteredList,false)
                 Log.d("MyTag","GamesFragment:filteredList.empty")
             } else {
                 binding.rcViewGame.isVisible = true
@@ -193,14 +197,11 @@ class GamesFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                // Игнорировать первый вызов после восстановления состояния
-                if (!isInitialQuerySet) {
-                    isInitialQuerySet = true
-                    return true
-                }
                 Log.d("MyTag", "GamesFragment:onQueryTextChange")
                 filterList(newText)
                 if (newText?.length==0) binding.rcViewGame.isVisible = false
+                else
+                    binding.mainBlock.visibility = View.GONE
                 return true
             }
         })
