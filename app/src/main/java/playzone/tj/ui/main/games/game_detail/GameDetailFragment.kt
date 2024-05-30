@@ -59,7 +59,7 @@ class GameDetailFragment() : Fragment() {
 
             binding.gameName.text = game?.gameName
             binding.gameDesc.text = game?.description
-            binding.tvRateGame.text = game?.rateGame.toString()
+            binding.ratingBar.rating = game?.rateGame!!.toFloat()
             binding.tvDownloadCount.text = game?.downloadCount.toString()
 
             Glide.with(requireContext())

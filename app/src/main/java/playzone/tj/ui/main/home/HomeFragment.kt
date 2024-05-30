@@ -24,11 +24,8 @@ import playzone.tj.ui.main.home.adapter_home.GenreAdapter
 import playzone.tj.databinding.FragmentHomeBinding
 import playzone.tj.retrofit.models.events.EventDTO
 import playzone.tj.retrofit.models.user_genres.Genres
-import playzone.tj.ui.main.home.all_events.PopularEventsFragment
-import playzone.tj.ui.main.home.user_info.UserInfoFragment
 import playzone.tj.ui.main.home.viewModels.HomeViewModel
 import playzone.tj.utils.APP_ACTIVITY
-import playzone.tj.utils.replaceFragment
 
 class HomeFragment : Fragment() {
 

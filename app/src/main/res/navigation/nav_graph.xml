@@ -41,6 +41,9 @@
         <action
             android:id="@+id/action_popularEventsFragment_to_eventDetailFragment"
             app:destination="@id/eventDetailFragment" />
+        <action
+            android:id="@+id/action_popularEventsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/gamesFragment"
@@ -93,4 +96,25 @@
         android:name="playzone.tj.ui.main_screen.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/streamFragment"
+        android:name="playzone.tj.ui.main.live_streams.StreamFragment"
+        android:label="fragment_stream"
+        tools:layout="@layout/fragment_stream" >
+        <action
+            android:id="@+id/action_streamFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_streamFragment_to_youTubeFragment"
+            app:destination="@id/youTubeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tournamentFragment"
+        android:name="playzone.tj.ui.main.tournament.TournamentFragment"
+        android:label="fragment_tournament"
+        tools:layout="@layout/fragment_tournament" >
+        <action
+            android:id="@+id/action_tournamentFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

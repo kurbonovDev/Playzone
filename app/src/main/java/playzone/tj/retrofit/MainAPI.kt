@@ -74,6 +74,10 @@ interface MainAPI {
     @POST("events/fetch/images")
     suspend fun fetchEventImages(@Body eventImagesRequest: EventImagesRequest):List<String>
 
+    @POST("games/fetch")
+    suspend fun findGames(@Header("Bearer-Authorization") headerValue: String,
+                           @Body gameRequest: GameRequest):List<GameDTO>
+
 
 
 }

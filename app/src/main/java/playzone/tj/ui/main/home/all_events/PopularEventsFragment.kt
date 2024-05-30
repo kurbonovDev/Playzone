@@ -1,12 +1,12 @@
 package playzone.tj.ui.main.home.all_events
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import playzone.tj.R
 import playzone.tj.databinding.FragmentPopularEventsBinding
 import playzone.tj.retrofit.models.events.EventDTO
-import playzone.tj.ui.main.home.HomeFragmentDirections
 import playzone.tj.ui.main.home.all_events.adapter.AllEventsAdapter
 import playzone.tj.ui.main.home.viewModels.HomeViewModel
 import playzone.tj.utils.APP_ACTIVITY
@@ -45,21 +44,21 @@ class PopularEventsFragment() : Fragment() {
         initRcView()
         findEvent()
         binding.back.setOnClickListener {
-          /* val action = PopularEventsFragmentDirections.actionPopularEventsFragmentToHomeFragment()
-            findNavController().navigate(action)*/
-            APP_ACTIVITY.onBackPressed()
-
+            val action = PopularEventsFragmentDirections.actionPopularEventsFragmentToHomeFragment()
+            findNavController().navigate(action)
         }
     }
 
     private fun initRcView() {
         rcView = binding.rcViewEvents
         rcView.layoutManager = LinearLayoutManager(APP_ACTIVITY)
-        adapter = AllEventsAdapter(viewModel.eventData){
-            val action = PopularEventsFragmentDirections.actionPopularEventsFragmentToEventDetailFragment(it)
+        adapter = AllEventsAdapter(viewModel.eventData) {
+            val action =
+                PopularEventsFragmentDirections.actionPopularEventsFragmentToEventDetailFragment(it)
             findNavController().navigate(action)
         }
         rcView.adapter = adapter
+        Log.d("MyTag", "PopularFragment:initRcView")
 
     }
 
@@ -81,6 +80,8 @@ class PopularEventsFragment() : Fragment() {
             binding.tvCancel.startAnimation(slideRightToLeft)
 
             binding.rcViewEvents.isVisible = false
+            Log.d("MyTag", "PopularFragment:filteredList.binding.find.setOnClickListener")
+
         }
 
         binding.tvCancel.setOnClickListener {
@@ -100,16 +101,19 @@ class PopularEventsFragment() : Fragment() {
             binding.find.startAnimation(slideLeftToRight)
             binding.popularEventText.startAnimation(slideLeftToRight)
             binding.back.startAnimation(slideLeftToRight)
-           // binding.searchView.setQuery("", false)
-           // binding.searchView.clearFocus()
+            // binding.searchView.setQuery("", false)
+            // binding.searchView.clearFocus()
             binding.nothingFind.visibility = View.GONE
             binding.nothingFindText.visibility = View.GONE
             binding.rcViewEvents.isVisible = true
-            rcView.adapter = AllEventsAdapter(viewModel.eventData){
-                val action = PopularEventsFragmentDirections.actionPopularEventsFragmentToEventDetailFragment(it)
+            rcView.adapter = AllEventsAdapter(viewModel.eventData) {
+                val action =
+                    PopularEventsFragmentDirections.actionPopularEventsFragmentToEventDetailFragment(
+                        it
+                    )
                 findNavController().navigate(action)
             }
-
+            Log.d("MyTag", "PopularFragment:filteredList.binding.tvCancel.setOnClickListener")
         }
     }
 
@@ -129,11 +133,16 @@ class PopularEventsFragment() : Fragment() {
                 binding.nothingFindText.visibility = View.VISIBLE
                 binding.nothingFindText.text = "Sorry we couldn’t find any matches for “$query”"
                 adapter.setFilterList(filteredList)
+                Log.d("MyTag", "PopularFragment:filteredList.isEmpty()")
             } else {
                 binding.rcViewEvents.isVisible = true
+                binding.rcViewEvents.visibility = View.VISIBLE
                 binding.nothingFind.visibility = View.GONE
                 binding.nothingFindText.visibility = View.GONE
                 adapter.setFilterList(filteredList)
+                Log.d("MyTag", "PopularFragment:filteredList.not_Empty()")
+                Log.d("MyTag", "PopularFragment:${filteredList}")
+                Log.d("MyTag", "PopularFragment:${binding.rcViewEvents.isVisible}")
             }
         }
     }
@@ -141,12 +150,14 @@ class PopularEventsFragment() : Fragment() {
     private fun findEvent() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                Log.d("MyTag", "PopularFragment:onQueryTextSubmit")
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                Log.d("MyTag", "PopularFragment:onQueryTextChange")
+                if (newText?.length == 0) binding.rcViewEvents.isVisible = false
                 filterList(newText)
-                if (newText?.length==0) binding.rcViewEvents.isVisible = false
                 return true
             }
         })

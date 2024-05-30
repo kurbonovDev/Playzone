@@ -15,13 +15,13 @@
         android:title="Search"
         app:showAsAction="always|collapseActionView" />
     <item
-        android:id="@+id/sword"
+        android:id="@+id/tournamentFragment"
         android:icon="@drawable/ic_sword"
         android:orderInCategory="3"
         android:title="Swords"
         app:showAsAction="always|collapseActionView" />
     <item
-        android:id="@+id/translation"
+        android:id="@+id/streamFragment"
         android:icon="@drawable/ic_translation"
         android:orderInCategory="4"
         android:title="Отчет"

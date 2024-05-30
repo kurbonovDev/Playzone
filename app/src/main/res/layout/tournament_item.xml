@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="24dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="162dp"
+        android:layout_height="106dp"
+        android:layout_marginStart="24dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#1F2430">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_team_first"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/name_team_first"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@id/image_team_first"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/image_team_first"
+                app:layout_constraintTop_toTopOf="@id/image_team_first"
+                tools:text="@tools:sample/lorem/random" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/target"
+                app:layout_constraintStart_toStartOf="@+id/image_team_first"
+                app:layout_constraintTop_toBottomOf="@+id/image_team_first" />
+
+            <TextView
+                android:id="@+id/tv_score_first_team"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="6dp"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="@id/imageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imageView"
+                app:layout_constraintTop_toTopOf="@id/imageView"
+                tools:text="@tools:sample/lorem/random" />
+
+            <ImageView
+                android:id="@+id/imageView14"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/database"
+                app:layout_constraintStart_toStartOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+
+            <TextView
+                android:id="@+id/tv_money_first_team"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="6dp"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="@id/imageView14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/imageView14"
+                app:layout_constraintTop_toTopOf="@id/imageView14"
+                tools:text="@tools:sample/lorem/random" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
+        android:layout_width="162dp"
+        android:layout_height="106dp"
+        android:layout_marginEnd="24dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#1F2430">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_team_second"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/name_team_second"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@id/image_team_second"
+                app:layout_constraintEnd_toStartOf="@id/image_team_second"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/image_team_second"
+                tools:text="@tools:sample/lorem/random" />
+
+            <ImageView
+                android:id="@+id/imageView211"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/target"
+                app:layout_constraintEnd_toEndOf="@+id/image_team_second"
+                app:layout_constraintTop_toBottomOf="@+id/image_team_second" />
+
+            <TextView
+                android:id="@+id/tv_score_second_team"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="6dp"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:textAlignment="textEnd"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="@id/imageView211"
+                app:layout_constraintEnd_toStartOf="@id/imageView211"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imageView211"
+                tools:text="@tools:sample/lorem/random" />
+
+            <ImageView
+                android:id="@+id/imageView149"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/database"
+                app:layout_constraintEnd_toEndOf="@+id/imageView211"
+                app:layout_constraintTop_toBottomOf="@+id/imageView211" />
+
+
+            <TextView
+                android:id="@+id/tv_money_second_team"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="6dp"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:textAlignment="textEnd"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="@id/imageView149"
+                app:layout_constraintEnd_toStartOf="@id/imageView149"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imageView149"
+                tools:text="@tools:sample/lorem/random" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="80dp"
+        android:layout_height="32dp"
+        android:layout_marginBottom="24dp"
+        app:cardBackgroundColor="@color/main_screen_color"
+        app:cardCornerRadius="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView3"
+        app:layout_constraintEnd_toStartOf="@+id/cardView3"
+        app:layout_constraintStart_toEndOf="@+id/cardView2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:drawableStart="@drawable/ic_video"
+            android:gravity="center"
+            android:text="  24K"
+            android:textColor="@color/white" />
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+

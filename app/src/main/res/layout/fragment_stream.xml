@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_screen_color"
-    tools:context=".ui.main.home.all_events.PopularEventsFragment">
+    tools:context=".ui.main.live_streams.StreamFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/event_toolbar"
@@ -37,7 +37,7 @@
                 android:id="@+id/popular_event_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Popular Events"
+                android:text="Live Streaming"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:visibility="visible"
@@ -94,47 +94,16 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
 
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcViewEvents"
+        android:id="@+id/rcViewLiveStream"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:paddingHorizontal="24dp"
+        android:paddingHorizontal="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/event_toolbar"
-        tools:listitem="@layout/all_event_item" />
-
-    <ImageView
-        android:id="@+id/nothingFind"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/nothing_find"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/rcViewEvents"
-        app:layout_constraintEnd_toEndOf="@+id/rcViewEvents"
-        app:layout_constraintStart_toStartOf="@+id/rcViewEvents"
-        app:layout_constraintTop_toTopOf="@+id/rcViewEvents" />
-
-    <TextView
-        android:id="@+id/nothingFindText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="64dp"
-        android:gravity="center"
-        android:maxLines="2"
-        android:text="Sorry we couldn’t find any matches for “Wadidaw”"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nothingFind" />
-
-
+        tools:itemCount="2"
+        tools:listitem="@layout/stream_item_live" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

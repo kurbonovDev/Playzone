@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import playzone.tj.R
 import playzone.tj.databinding.FragmentPointBinding
+import playzone.tj.utils.APP_ACTIVITY
 
 class PointFragment : Fragment() {
 
@@ -19,7 +21,9 @@ class PointFragment : Fragment() {
     private lateinit var navController: NavController
     private val topIdSet = setOf(
         R.id.homeFragment,
-        R.id.gamesFragment
+        R.id.gamesFragment,
+        R.id.streamFragment,
+        R.id.tournamentFragment
     )
 
     override fun onCreateView(
@@ -63,13 +67,12 @@ class PointFragment : Fragment() {
                 }
 
                 R.id.eventDetailFragment -> {
-                    navController.popBackStack(R.id.homeFragment, false)
+                    navController.popBackStack()
                 }
 
                 R.id.youTubeFragment -> {
-                    navController.popBackStack(R.id.eventDetailFragment, false)
+                  navController.popBackStack()
                 }
-
                 else -> {
                     requireActivity().finish()
                 }
