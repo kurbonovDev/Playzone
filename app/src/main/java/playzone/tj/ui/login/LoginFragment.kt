@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,15 +45,13 @@ class LoginFragment : Fragment() {
             replaceFragment(RegisterFragment())
         }
         binding.btnLoginNow.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch {
+            viewLifecycleOwner.lifecycleScope.launch {
                 login()
             }
         }
-
         binding.forgotPassword.setOnClickListener {
             replaceFragment(ForgetFragment())
         }
-
     }
 
 
@@ -64,24 +63,24 @@ class LoginFragment : Fragment() {
             try {
                 val token = mainApi.login(LoginReceiveRemote(login, password))
                 if (token != null) {
-                    sharedPreferences.edit()?.putBoolean("isRegistered",true)?.apply()
-                    sharedPreferences.edit()?.putString("token",token.token)?.apply()
-                    sharedPreferences.edit()?.putString("login",login)?.apply()
-
+                    sharedPreferences.edit()?.putBoolean("isRegistered", true)?.apply()
+                    sharedPreferences.edit()?.putString("token", token.token)?.apply()
+                    sharedPreferences.edit()?.putString("login", login)?.apply()
                     replaceFragment(PointFragment(), false)
                 }
-            }catch (e: Exception) {
+            } catch (e: Exception) {
 
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(APP_ACTIVITY, "Incorrect login or password", Toast.LENGTH_SHORT).show()
-                    Log.d("MyTag","${e.message}")
+                    Toast.makeText(APP_ACTIVITY, "Incorrect login or password", Toast.LENGTH_SHORT)
+                        .show()
+                    Log.d("MyTag", "${e.message}")
                 }
 
             }
-        }else{
-            withContext(Dispatchers.Main){
+        } else {
+            withContext(Dispatchers.Main) {
 
-                Toast.makeText(APP_ACTIVITY,"Fill login and password",Toast.LENGTH_SHORT).show()
+                Toast.makeText(APP_ACTIVITY, "Fill login and password", Toast.LENGTH_SHORT).show()
             }
         }
     }

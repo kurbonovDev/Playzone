@@ -53,6 +53,7 @@ class UserInfoFragment() : Fragment() {
         binding.btnExit.setOnClickListener {
             ExitDialog.showDialog(requireContext(),object :ExitDialog.Listener{
                 override fun onClick() {
+                    homeViewModel.clearData()
                     sharedPreferences.edit().clear().apply()
                     val action  = UserInfoFragmentDirections.actionUserInfoFragmentToMainFragment()
                     findNavController().navigate(action)

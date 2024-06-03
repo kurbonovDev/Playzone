@@ -68,8 +68,6 @@ class GameDetailFragment() : Fragment() {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.someGameImage)
 
-
-
             viewLifecycleOwner.lifecycleScope.launch {
                 val listGenres = mainApi.fetchGameGenre(GetGameGenre(game!!.gameID))
                 with(Dispatchers.Main) {

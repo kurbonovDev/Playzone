@@ -12,7 +12,7 @@ import playzone.tj.retrofit.models.games.GameDTO
 
 class GamesAdapter(
     private var gameList: List<GameDTO>,
-    private var isSearch:Boolean=false,
+    private var isSearch: Boolean = false,
     private val listener: (item: GameDTO) -> Unit
 ) : RecyclerView.Adapter<GamesAdapter.GameViewHolder>() {
     class GameViewHolder(val binding: GameItemBinding) : RecyclerView.ViewHolder(binding.root)
@@ -23,10 +23,9 @@ class GamesAdapter(
     }
 
     override fun getItemCount(): Int = gameList.size
-
-    fun setFilterList(list: List<GameDTO>,isSearch: Boolean) {
+    fun setFilterList(list: List<GameDTO>, isSearch: Boolean) {
         this.gameList = list
-        this.isSearch=isSearch
+        this.isSearch = isSearch
         notifyDataSetChanged()
 
     }
@@ -45,7 +44,7 @@ class GamesAdapter(
             tvGameVersion.text = "Ver:${gameList[position].versionGame}"
             tvGameSize.text = gameList[position].sizeGame
             if (isSearch)
-            tvGameNumber.text = (position + 1).toString()
+                tvGameNumber.text = (position + 1).toString()
             else
                 tvGameNumber.text = (position + 4).toString()
             root.setOnClickListener {

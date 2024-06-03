@@ -110,6 +110,7 @@ class GamesFragment : Fragment() {
             }
         }
 
+
     }
 
     private fun initRcView() {
@@ -233,10 +234,10 @@ class GamesFragment : Fragment() {
 
 
     private fun debounceSearch(query: String?) {
-      if(query==""){
-          searchJob?.cancel()
-          filterList(emptyList(),"")
-      }else if (query != null) {
+        if (query == "") {
+            searchJob?.cancel()
+            filterList(emptyList(), "")
+        } else if (query != null) {
             searchJob?.cancel()
             searchJob = lifecycleScope.launch {
                 delay(500) // Задержка для debounce (500 мс)

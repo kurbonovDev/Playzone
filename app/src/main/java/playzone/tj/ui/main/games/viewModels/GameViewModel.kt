@@ -21,21 +21,19 @@ class GameViewModel : ViewModel() {
 
 
     private var _findData = emptyList<GameDTO>()
-     val findData: List<GameDTO> get() = _findData
+    val findData: List<GameDTO> get() = _findData
 
     suspend fun fetchGames(token: String) {
         if (_data.isEmpty())
             _data = mainApi.fetchGames(token, GameRequest(""))
     }
 
-
-
     suspend fun findGames(token: String, searchQuery: String) {
         _findData = mainApi.findGames(
             headerValue = token,
             gameRequest = GameRequest(searchQuery)
         )
-        Log.d("MyTag","suspend findGames:$findData")
+        Log.d("MyTag", "suspend findGames:$findData")
     }
 
 }

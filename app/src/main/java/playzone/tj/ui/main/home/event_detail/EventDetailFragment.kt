@@ -1,10 +1,15 @@
 package playzone.tj.ui.main.home.event_detail
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
+import android.graphics.PorterDuff
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -24,6 +29,7 @@ import playzone.tj.retrofit.models.games.GameDTO
 import playzone.tj.ui.main.games.game_detail.GameDetailFragmentArgs
 import playzone.tj.ui.main.home.event_detail.adapter.EventDetailImageAdapter
 import playzone.tj.ui.main.home.viewModels.HomeViewModel
+import playzone.tj.utils.APP_ACTIVITY
 import playzone.tj.utils.mainApi
 
 class EventDetailFragment : Fragment() {
@@ -51,6 +57,11 @@ class EventDetailFragment : Fragment() {
                 EventDetailFragmentDirections.actionEventDetailFragmentToYouTubeFragment(event!!.link)
             findNavController().navigate(action)
         }
+        binding.btnShare.setOnClickListener {
+            shareContent()
+        }
+        addLike()
+
     }
 
 
@@ -83,6 +94,29 @@ class EventDetailFragment : Fragment() {
 
 
     }
+    private fun shareContent() {
+        val shareIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, "Это пример текста для отправки.")
+            type = "text/plain"
+        }
+        startActivity(Intent.createChooser(shareIntent, "Поделиться с помощью"))
+    }
 
+    private fun addLike(){
+        var isLike = false
+        binding.btnLike.setOnClickListener {
+            if (isLike){
+                binding.tvLike.setTextColor(resources.getColor(R.color.white))
+                binding.imLike.setColorFilter(ContextCompat.getColor(context?: APP_ACTIVITY,R.color.white))
+            }else{
+                binding.tvLike.setTextColor(resources.getColor(R.color.red))
+                binding.imLike.setColorFilter(ContextCompat.getColor(context?: APP_ACTIVITY,R.color.red))
+            }
+            isLike=!isLike
+
+        }
+
+    }
 
 }

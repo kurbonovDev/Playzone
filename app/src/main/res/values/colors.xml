@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#FFB300</color>
+    <color name="red">#FF0008</color>
     <color name="circle_color">#0DFFFFFF</color>
     <color name="main_screen_color">#050B18</color>
     <color name="edit_text_background">#1F2430</color>

@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,18 +45,14 @@ class OtpScreenFragment(private val registerReceiveRemote: RegisterReceiveRemote
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         timer()
-
-
     }
 
     private fun timer() {
         val timer = object : CountDownTimer(15000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val second = millisUntilFinished / 1000
-
                 binding.timeWaiting.text = "00:${String.format("%02d", second)}"
             }
-
             override fun onFinish() {
                 binding.timeWaiting.text = "00:00"
             }
@@ -72,7 +69,7 @@ class OtpScreenFragment(private val registerReceiveRemote: RegisterReceiveRemote
     }
 
     private fun sendOtpToEmail() {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             try {
                 mainApi.registerNewUser(registerReceiveRemote)
             } catch (e: Exception) {
@@ -104,15 +101,16 @@ class OtpScreenFragment(private val registerReceiveRemote: RegisterReceiveRemote
             )
 
             if (otpCode.length == 4) {
-                CoroutineScope(Dispatchers.IO).launch {
+                viewLifecycleOwner.lifecycleScope.launch {
                     try {
                         val token = mainApi.checkOtpCodeForRegister(otp = otp)
 
                         if (token != null) {
                             withContext(Dispatchers.Main) {
                                 sharedPreferences?.edit()?.putBoolean("isRegistered", true)?.apply()
-                                sharedPreferences?.edit()?.putString("login",registerReceiveRemote.login)?.apply()
-                                sharedPreferences?.edit()?.putString("token",token.token)?.apply()
+                                sharedPreferences?.edit()
+                                    ?.putString("login", registerReceiveRemote.login)?.apply()
+                                sharedPreferences?.edit()?.putString("token", token.token)?.apply()
                                 APP_ACTIVITY.supportFragmentManager.popBackStack(
                                     null,
                                     FragmentManager.POP_BACK_STACK_INCLUSIVE

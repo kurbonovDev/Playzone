@@ -2,17 +2,14 @@ package playzone.tj
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.findNavController
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import playzone.tj.databinding.ActivityMainBinding
 import playzone.tj.retrofit.MainAPI
 import playzone.tj.ui.main.PointFragment
-import playzone.tj.ui.main.games.GamesFragment
-import playzone.tj.ui.main.home.HomeFragment
 import playzone.tj.ui.main_screen.MainFragment
 import playzone.tj.ui.registration.ChooseGenreFragment
 import playzone.tj.utils.APP_ACTIVITY
@@ -31,13 +28,28 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Thread.sleep(500)
-        installSplashScreen()
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         sharedPreferences = getSharedPreferences("my_storage", Context.MODE_PRIVATE)
         APP_ACTIVITY = this
+        initRetrofit()
 
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        if (sharedPreferences.getBoolean("isRegistered", false)) {
+            if (sharedPreferences.getBoolean("isChosenGenre", false)) {
+                replaceFragment(PointFragment(), false)
+            } else {
+                replaceFragment(ChooseGenreFragment(), false)
+            }
+        } else {
+            replaceFragment(MainFragment(), false)
+        }
+        installSplashScreen()
+
+
+    }
+
+    private fun initRetrofit(){
         interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
 
@@ -54,18 +66,5 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         mainApi = retrofit.create(MainAPI::class.java)
-
-        if (sharedPreferences.getBoolean("isRegistered", false)) {
-            if (sharedPreferences.getBoolean("isChosenGenre", false)) {
-                replaceFragment(PointFragment(), false)
-            } else {
-                replaceFragment(ChooseGenreFragment(), false)
-            }
-        } else {
-
-            replaceFragment(MainFragment(), false)
-        }
-
-
     }
 }

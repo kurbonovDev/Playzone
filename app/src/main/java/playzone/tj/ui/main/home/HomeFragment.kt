@@ -33,7 +33,6 @@ class HomeFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var rcViewEvents: RecyclerView
     private lateinit var rcViewCategories: RecyclerView
-    private var listEvents = listOf<EventDTO>()
     private var listGenresName = listOf<String>()
     private var listGenres = mutableListOf<Genres>()
     private val homeViewModel: HomeViewModel by activityViewModels()
@@ -105,17 +104,15 @@ class HomeFragment : Fragment() {
                 homeViewModel.fetchEvents(token ?: "")
             }
             try {
-                listEvents = homeViewModel.eventData
                 withContext(Dispatchers.Main) {
                     rcViewEvents = binding.rcViewEvents
                     rcViewEvents.layoutManager =
                         LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                    rcViewEvents.adapter = EventAdapter(listEvents){
+                    rcViewEvents.adapter = EventAdapter( homeViewModel.eventData){
                         val action = HomeFragmentDirections.actionHomeFragmentToEventDetailFragment(it)
                         findNavController().navigate(action)
                     }
                 }
-
             } catch (e: Exception) {
                 Log.d("MyHomeTag", "${e.message}")
             }

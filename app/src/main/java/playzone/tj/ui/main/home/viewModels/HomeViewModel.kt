@@ -1,5 +1,7 @@
 package playzone.tj.ui.main.home.viewModels
 
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import playzone.tj.retrofit.models.GetUser
 import playzone.tj.retrofit.models.User
@@ -32,6 +34,7 @@ class HomeViewModel : ViewModel() {
     }
 
     suspend fun fetchUser(login: String) {
+        Log.d("MyTag","$_userData")
         if (_userData == null)
             _userData = mainApi.fetchUser(GetUser(login))
     }

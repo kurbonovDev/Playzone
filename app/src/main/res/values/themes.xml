@@ -31,11 +31,11 @@
 
 
 
-    <style name="Theme.App.SplashScreen" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
         <item name="windowSplashScreenIconBackgroundColor">@color/main_screen_color</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/user_settings</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/avd_anim</item>
         <item name="postSplashScreenTheme">@style/Base.Theme.Playzone</item>
-
+        <item name="windowSplashScreenAnimationDuration">1000</item>
     </style>
 
     <style name="RoundedTextInputLayout">

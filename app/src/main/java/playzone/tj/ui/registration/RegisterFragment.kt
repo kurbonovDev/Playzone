@@ -77,7 +77,6 @@ class RegisterFragment : Fragment() {
                 }catch (e:Exception){
                     Log.d("MyTag", "RegisterFragment: ${e.message}")
                     withContext(Dispatchers.Main){
-
                         binding.progressBar2.visibility = View.GONE
                         binding.btnCreateAccount.isEnabled = true
                     }
