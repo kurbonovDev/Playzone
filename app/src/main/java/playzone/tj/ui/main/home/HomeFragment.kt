@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,12 +21,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import playzone.tj.R
 import playzone.tj.ui.main.home.adapter_home.EventAdapter
-import playzone.tj.ui.main.home.adapter_home.GenreAdapter
 import playzone.tj.databinding.FragmentHomeBinding
-import playzone.tj.retrofit.models.events.EventDTO
 import playzone.tj.retrofit.models.user_genres.Genres
+import playzone.tj.ui.main.home.adapter_home.GenreAdapter
 import playzone.tj.ui.main.home.viewModels.HomeViewModel
 import playzone.tj.utils.APP_ACTIVITY
+import playzone.tj.utils.STORAGE_KEY
 
 class HomeFragment : Fragment() {
 
@@ -35,9 +36,11 @@ class HomeFragment : Fragment() {
     private lateinit var rcViewCategories: RecyclerView
     private var listGenresName = listOf<String>()
     private var listGenres = mutableListOf<Genres>()
-    private val homeViewModel: HomeViewModel by activityViewModels()
-    private var login: String? = null
-    private var token: String? = null
+
+    private val homeViewModel: HomeViewModel by activityViewModels {
+        HomeViewModel.MainViewModelFactory(requireContext())
+    }
+
 
     private val genreImageMap = mapOf(
         "Puzzle" to R.drawable.puzzle_image,
@@ -51,16 +54,15 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.d("MyTag", "ViewModel UserData :${homeViewModel.userData.value}")
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        sharedPreferences = APP_ACTIVITY.getSharedPreferences("my_storage", Context.MODE_PRIVATE)
+        sharedPreferences = APP_ACTIVITY.getSharedPreferences(STORAGE_KEY, Context.MODE_PRIVATE)
         sharedPreferences.edit()?.putBoolean("isChosenGenre", true)?.apply()
         super.onViewCreated(view, savedInstanceState)
-        token = sharedPreferences.getString("token", "")
-        login = sharedPreferences.getString("login", "")
         initEventRcView()
         initToolbar()
         initGenreRcView()
@@ -71,99 +73,89 @@ class HomeFragment : Fragment() {
 
     private fun showAllEvents() {
         binding.showAllText.setOnClickListener {
-              val action =HomeFragmentDirections.actionHomeFragmentToPopularEventsFragment()
-              findNavController().navigate(action)
+            val action = HomeFragmentDirections.actionHomeFragmentToPopularEventsFragment()
+            findNavController().navigate(action)
         }
     }
 
     private fun openSettings() {
         binding.icSettings.setOnClickListener {
-            val action =HomeFragmentDirections.actionHomeFragmentToUserInfoFragment()
+            val action = HomeFragmentDirections.actionHomeFragmentToUserInfoFragment()
             findNavController().navigate(action)
         }
     }
 
     private fun initToolbar() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            val login = sharedPreferences.getString("login", "")
-            homeViewModel.fetchUser(login!!)
-            withContext(Dispatchers.Main) {
-                binding.nameUser.text = homeViewModel.userData.username
-                Glide.with(APP_ACTIVITY)
-                    .load(homeViewModel.userData.userImage)
+        homeViewModel.userData.observe(viewLifecycleOwner, Observer { user ->
+            user?.let {
+                binding.nameUser.text = it.username
+                Glide.with(requireActivity())
+                    .load(it.userImage)
                     .error(R.drawable.user)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(binding.imageUser)
             }
+        })
+    }
+
+    private fun test() {
+        homeViewModel.eventData.observe(viewLifecycleOwner){
+
         }
     }
 
     private fun initEventRcView() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            if (homeViewModel.eventData.isEmpty()) {
-                homeViewModel.fetchEvents(token ?: "")
-            }
-            try {
-                withContext(Dispatchers.Main) {
-                    rcViewEvents = binding.rcViewEvents
-                    rcViewEvents.layoutManager =
-                        LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                    rcViewEvents.adapter = EventAdapter( homeViewModel.eventData){
-                        val action = HomeFragmentDirections.actionHomeFragmentToEventDetailFragment(it)
+        homeViewModel.eventData.observe(viewLifecycleOwner, Observer { events ->
+            Log.d("MyTag", "ViewModel initEventRcView  ${events}")
+            events?.let {
+
+                rcViewEvents = binding.rcViewEvents
+                rcViewEvents.layoutManager =
+                    LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                if (it.eventData.isNotEmpty()) {
+                    rcViewEvents.adapter = EventAdapter(it.eventData) {
+                        val action =
+                            HomeFragmentDirections.actionHomeFragmentToEventDetailFragment(it)
                         findNavController().navigate(action)
                     }
+
                 }
-            } catch (e: Exception) {
-                Log.d("MyHomeTag", "${e.message}")
             }
-        }
+        })
     }
 
     private fun initGenreRcView() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            try {
-                homeViewModel.fetchUserGenres(login ?: "")
-                listGenresName = homeViewModel.genreData.userGenres
+        homeViewModel.genreData.observe(viewLifecycleOwner, Observer { userGenres ->
+            userGenres?.let {
+                listGenresName = it.userGenres
                 listGenres = listGenresName.mapNotNull { genreName ->
                     genreImageMap[genreName]?.let { imageResId ->
                         Genres(imageResId, genreName)
                     }
                 }.toMutableList()
-                withContext(Dispatchers.Main) {
-                    rcViewCategories = binding.reViewCategory
-                    rcViewCategories.layoutManager =
-                        LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                    rcViewCategories.adapter = GenreAdapter(listGenres)
-                }
-
-
-            } catch (e: Exception) {
-                Log.d("MyHometag", "${e.message}")
+                rcViewCategories = binding.reViewCategory
+                rcViewCategories.layoutManager =
+                    LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                rcViewCategories.adapter = GenreAdapter(listGenres)
             }
-        }
+        })
     }
+
 
     private fun updateUI() {
         binding.swiper.setOnRefreshListener {
             homeViewModel.clearData()
-            viewLifecycleOwner.lifecycleScope.launch {
-                homeViewModel.fetchUser(login ?: "")
-                homeViewModel.fetchEvents(token ?: "")
-                homeViewModel.fetchUserGenres(login ?: "")
-                withContext(Dispatchers.Main) {
-                    binding.swiper.isRefreshing = false
-                    initToolbar()
-                    initEventRcView()
-                    initGenreRcView()
-                }
-            }
+            homeViewModel.fetchUser()
+            homeViewModel.fetchEvents()
+            homeViewModel.fetchUserGenres()
+            binding.swiper.isRefreshing = false
 
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
         listGenres.clear()
     }
 }
+

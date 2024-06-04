@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -52,13 +53,18 @@ class PopularEventsFragment() : Fragment() {
     private fun initRcView() {
         rcView = binding.rcViewEvents
         rcView.layoutManager = LinearLayoutManager(APP_ACTIVITY)
-        adapter = AllEventsAdapter(viewModel.eventData) {
-            val action =
-                PopularEventsFragmentDirections.actionPopularEventsFragmentToEventDetailFragment(it)
-            findNavController().navigate(action)
-        }
-        rcView.adapter = adapter
         Log.d("MyTag", "PopularFragment:initRcView")
+        viewModel.eventData.observe(viewLifecycleOwner, Observer {listEvents->
+            listEvents?.let {
+                adapter = AllEventsAdapter(it.eventData) {event->
+                    val action =
+                        PopularEventsFragmentDirections.actionPopularEventsFragmentToEventDetailFragment(event)
+                    findNavController().navigate(action)
+                }
+                rcView.adapter = adapter
+            }
+
+        })
 
     }
 
@@ -106,7 +112,8 @@ class PopularEventsFragment() : Fragment() {
             binding.nothingFind.visibility = View.GONE
             binding.nothingFindText.visibility = View.GONE
             binding.rcViewEvents.isVisible = true
-            rcView.adapter = AllEventsAdapter(viewModel.eventData) {
+
+            rcView.adapter = AllEventsAdapter(viewModel.eventData.value!!.eventData) {
                 val action =
                     PopularEventsFragmentDirections.actionPopularEventsFragmentToEventDetailFragment(
                         it
@@ -121,7 +128,7 @@ class PopularEventsFragment() : Fragment() {
 
         if (query != null) {
             val filteredList = ArrayList<EventDTO>()
-            for (i in viewModel.eventData) {
+            for (i in viewModel.eventData.value!!.eventData) {
                 if (i.eventName.contains(query, ignoreCase = true)) {
                     filteredList.add(i)
                 }

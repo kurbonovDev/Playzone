@@ -1,14 +1,8 @@
 package playzone.tj.utils
 
+import android.content.Context
+import android.net.ConnectivityManager
 import androidx.fragment.app.Fragment
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.newSingleThreadContext
-import kotlinx.coroutines.withContext
 import playzone.tj.R
 import playzone.tj.retrofit.models.games.GameDTO
 
@@ -32,6 +26,13 @@ fun filterGames(games: List<GameDTO>): Pair<List<GameDTO>, List<GameDTO>> {
     val topThreeGames = sortedGames.take(3)
     val remainingGames = sortedGames.drop(3)
     return Pair(topThreeGames, remainingGames)
+}
+
+
+fun isOnline(context: Context): Boolean {
+    val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val netInfo = cm.activeNetworkInfo
+    return netInfo != null && netInfo.isConnectedOrConnecting
 }
 
 

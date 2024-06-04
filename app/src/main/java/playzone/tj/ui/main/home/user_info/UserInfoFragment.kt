@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -64,17 +65,26 @@ class UserInfoFragment() : Fragment() {
 
 
     private fun initFields() {
-        binding.userFullName.setText(homeViewModel.userData.username)
-        binding.userPassword.setText(homeViewModel.userData.password)
-        Glide.with(APP_ACTIVITY)
-            .load(homeViewModel.userData.userImage)
-            .error(R.drawable.user)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(binding.userImage)
 
-        binding.tvUserFullName.text = homeViewModel.userData.username
-        binding.tvUserEmail.text = homeViewModel.userData.email
-        binding.tvUserLogin.text = homeViewModel.userData.login
+        homeViewModel.userData.observe(viewLifecycleOwner, Observer { user->
+            user?.let {
+                binding.userFullName.setText(it.username)
+                binding.userPassword.setText(it.password)
+                Glide.with(APP_ACTIVITY)
+                    .load(it.userImage)
+                    .error(R.drawable.user)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(binding.userImage)
+
+                binding.tvUserFullName.text = it.username
+                binding.tvUserEmail.text = it.email
+                binding.tvUserLogin.text = it.login
+            }
+        })
+
+
+
+
 
     }
 
@@ -83,12 +93,15 @@ class UserInfoFragment() : Fragment() {
         binding.updateBtn.setOnClickListener {
             binding.isUpdating.visibility = View.VISIBLE
             binding.updateBtn.isEnabled = false
+
+
+
             val user =User(
-                homeViewModel.userData.login,
+                homeViewModel.userData.value!!.login,
                 binding.userPassword.text.toString(),
-                homeViewModel.userData.email,
+                homeViewModel.userData.value!!.email,
                 binding.userFullName.text.toString(),
-                homeViewModel.userData.userImage
+                homeViewModel.userData.value!!.userImage
             )
             viewLifecycleOwner.lifecycleScope.launch {
                 try {

@@ -8,7 +8,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import playzone.tj.R
 import playzone.tj.databinding.EventItemBinding
 import playzone.tj.retrofit.models.events.EventDTO
-import playzone.tj.retrofit.models.games.GameDTO
 
 class EventAdapter(private val list: List<EventDTO>,private val listener: (item: EventDTO) -> Unit): RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
      class EventViewHolder(val binding:EventItemBinding):RecyclerView.ViewHolder(binding.root)

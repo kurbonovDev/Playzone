@@ -20,6 +20,7 @@ import playzone.tj.retrofit.models.user_genres.UserGenresReceive
 import playzone.tj.retrofit.models.user_genres.UserGenresResponse
 import playzone.tj.retrofit.models.user_genres.UsersGenresRequest
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -47,7 +48,7 @@ interface MainAPI {
 
     @POST("events/fetch")
     suspend fun fetchEvent(@Header("Bearer-Authorization") headerValue: String,
-                           @Body eventRequest: EventRequest):List<EventDTO>
+                           @Body eventRequest: EventRequest):Response<List<EventDTO>>
 
 
     @POST("add/genres_to_user")

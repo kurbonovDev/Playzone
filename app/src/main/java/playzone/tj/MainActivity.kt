@@ -3,6 +3,7 @@ package playzone.tj
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import okhttp3.OkHttpClient
@@ -16,6 +17,7 @@ import playzone.tj.utils.APP_ACTIVITY
 import playzone.tj.utils.baseUrl
 import playzone.tj.utils.client
 import playzone.tj.utils.interceptor
+import playzone.tj.utils.isOnline
 import playzone.tj.utils.mainApi
 import playzone.tj.utils.replaceFragment
 import playzone.tj.utils.retrofit
@@ -31,25 +33,27 @@ class MainActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("my_storage", Context.MODE_PRIVATE)
         APP_ACTIVITY = this
         initRetrofit()
-
+        installSplashScreen()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        if (sharedPreferences.getBoolean("isRegistered", false)) {
-            if (sharedPreferences.getBoolean("isChosenGenre", false)) {
-                replaceFragment(PointFragment(), false)
+        if (isOnline(this)) {
+            if (sharedPreferences.getBoolean("isRegistered", false)) {
+                if (sharedPreferences.getBoolean("isChosenGenre", false)) {
+                    replaceFragment(PointFragment(), false)
+                } else {
+                    replaceFragment(ChooseGenreFragment(), false)
+                }
             } else {
-                replaceFragment(ChooseGenreFragment(), false)
+                replaceFragment(MainFragment(), false)
             }
         } else {
-            replaceFragment(MainFragment(), false)
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show()
         }
-        installSplashScreen()
 
 
     }
 
-    private fun initRetrofit(){
+    private fun initRetrofit() {
         interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
 
