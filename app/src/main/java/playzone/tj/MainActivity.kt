@@ -36,18 +36,15 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        if (isOnline(this)) {
-            if (sharedPreferences.getBoolean("isRegistered", false)) {
-                if (sharedPreferences.getBoolean("isChosenGenre", false)) {
-                    replaceFragment(PointFragment(), false)
-                } else {
-                    replaceFragment(ChooseGenreFragment(), false)
-                }
+
+        if (sharedPreferences.getBoolean("isRegistered", false)) {
+            if (sharedPreferences.getBoolean("isChosenGenre", false)) {
+                replaceFragment(PointFragment(), false)
             } else {
-                replaceFragment(MainFragment(), false)
+                replaceFragment(ChooseGenreFragment(), false)
             }
         } else {
-            Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show()
+            replaceFragment(MainFragment(), false)
         }
 
 
@@ -59,9 +56,9 @@ class MainActivity : AppCompatActivity() {
 
         client = OkHttpClient.Builder()
             .addInterceptor(interceptor)
-            .connectTimeout(60, TimeUnit.SECONDS) // Устанавливает таймаут на соединение
-            .writeTimeout(60, TimeUnit.SECONDS)   // Устанавливает таймаут на запись
-            .readTimeout(60, TimeUnit.SECONDS)    // Устанавливает таймаут на чтение
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
             .build()
 
         retrofit = Retrofit.Builder()

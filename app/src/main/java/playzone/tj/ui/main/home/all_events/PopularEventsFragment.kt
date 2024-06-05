@@ -39,10 +39,10 @@ class PopularEventsFragment() : Fragment() {
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         animateSearchView()
-        initRcView()
+      //  initRcView()
         findEvent()
         binding.back.setOnClickListener {
             val action = PopularEventsFragmentDirections.actionPopularEventsFragmentToHomeFragment()
@@ -50,7 +50,7 @@ class PopularEventsFragment() : Fragment() {
         }
     }
 
-    private fun initRcView() {
+    /*private fun initRcView() {
         rcView = binding.rcViewEvents
         rcView.layoutManager = LinearLayoutManager(APP_ACTIVITY)
         Log.d("MyTag", "PopularFragment:initRcView")
@@ -66,7 +66,7 @@ class PopularEventsFragment() : Fragment() {
 
         })
 
-    }
+    }*/
 
     private fun animateSearchView() {
         binding.find.setOnClickListener {
@@ -168,7 +168,7 @@ class PopularEventsFragment() : Fragment() {
                 return true
             }
         })
-    }
+    }*/
 
 
 }

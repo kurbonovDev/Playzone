@@ -55,10 +55,10 @@ interface MainAPI {
     suspend fun addGenresToUser(@Body usersGenresRequest: UsersGenresRequest)
 
     @POST("fetch/user_genres")
-    suspend fun fetchUserGenres(@Body userGenresReceive: UserGenresReceive):UserGenresResponse
+    suspend fun fetchUserGenres(@Body userGenresReceive: UserGenresReceive):Response<UserGenresResponse>
 
     @POST("fetch/user")
-    suspend fun fetchUser(@Body getUser: GetUser): User
+    suspend fun fetchUser(@Body getUser: GetUser): Response<User>
 
     @POST("update_user_info")
     suspend fun updateUser(@Body user: User)

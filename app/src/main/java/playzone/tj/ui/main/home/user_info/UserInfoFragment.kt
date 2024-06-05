@@ -20,14 +20,11 @@ import kotlinx.coroutines.withContext
 import playzone.tj.R
 import playzone.tj.databinding.FragmentFillUserInfoBinding
 import playzone.tj.retrofit.models.User
-import playzone.tj.ui.main.home.HomeFragment
-import playzone.tj.ui.main.home.HomeFragmentDirections
 import playzone.tj.ui.main.home.viewModels.HomeViewModel
 import playzone.tj.utils.APP_ACTIVITY
 import playzone.tj.utils.ExitDialog
 import playzone.tj.utils.STORAGE_KEY
 import playzone.tj.utils.mainApi
-import playzone.tj.utils.replaceFragment
 
 
 class UserInfoFragment() : Fragment() {
@@ -66,19 +63,19 @@ class UserInfoFragment() : Fragment() {
 
     private fun initFields() {
 
-        homeViewModel.userData.observe(viewLifecycleOwner, Observer { user->
+        homeViewModel.userUIState.observe(viewLifecycleOwner, Observer { user->
             user?.let {
-                binding.userFullName.setText(it.username)
-                binding.userPassword.setText(it.password)
+                binding.userFullName.setText(it.user?.username)
+                binding.userPassword.setText(it.user?.password)
                 Glide.with(APP_ACTIVITY)
-                    .load(it.userImage)
+                    .load(it.user?.userImage)
                     .error(R.drawable.user)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(binding.userImage)
 
-                binding.tvUserFullName.text = it.username
-                binding.tvUserEmail.text = it.email
-                binding.tvUserLogin.text = it.login
+                binding.tvUserFullName.text = it.user?.username
+                binding.tvUserEmail.text = it.user?.username
+                binding.tvUserLogin.text = it.user?.login
             }
         })
 
@@ -97,11 +94,11 @@ class UserInfoFragment() : Fragment() {
 
 
             val user =User(
-                homeViewModel.userData.value!!.login,
+                homeViewModel.userUIState.value!!.user!!.login,
                 binding.userPassword.text.toString(),
-                homeViewModel.userData.value!!.email,
+                homeViewModel.userUIState.value!!.user?.email,
                 binding.userFullName.text.toString(),
-                homeViewModel.userData.value!!.userImage
+                homeViewModel.userUIState.value!!.user?.userImage
             )
             viewLifecycleOwner.lifecycleScope.launch {
                 try {

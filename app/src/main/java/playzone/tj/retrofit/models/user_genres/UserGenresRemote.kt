@@ -12,7 +12,7 @@ data class UserGenresReceive(
 )
 
 data class UserGenresResponse(
-    val userGenres:List<String>
+    var userGenres:List<String>
 )
 
 data class Genres(

@@ -66,6 +66,16 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
 
+        <ProgressBar
+            android:id="@+id/user_progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/home_toolbar"
+            app:layout_constraintEnd_toEndOf="@+id/home_toolbar"
+            app:layout_constraintStart_toStartOf="@+id/home_toolbar"
+            app:layout_constraintTop_toTopOf="@+id/home_toolbar" />
+
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
@@ -166,6 +176,41 @@
                     tools:itemCount="4"
                     tools:listitem="@layout/genre_item" />
 
+                <ImageView
+                    android:id="@+id/genreImageError"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="32dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/error2"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+                <TextView
+                    android:id="@+id/genreTextError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/white"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@+id/genreImageError"
+                    app:layout_constraintStart_toStartOf="@id/genreImageError"
+                    app:layout_constraintTop_toBottomOf="@id/genreImageError" />
+
+
+                <ProgressBar
+                    android:id="@+id/genre_progressbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/reViewCategory"
+                    app:layout_constraintEnd_toEndOf="@+id/reViewCategory"
+                    app:layout_constraintStart_toStartOf="@+id/reViewCategory"
+                    app:layout_constraintTop_toTopOf="@+id/reViewCategory" />
+
                 <TextView
                     android:id="@+id/popular_event_text"
                     android:layout_width="wrap_content"
@@ -207,6 +252,40 @@
                     app:layout_constraintTop_toBottomOf="@+id/popular_event_text"
                     tools:itemCount="2"
                     tools:listitem="@layout/event_item" />
+
+                <ImageView
+                    android:id="@+id/eventsImageError"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/error2"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/reViewCategory" />
+
+                <TextView
+                    android:id="@+id/eventsTextError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/white"
+                    android:textAlignment="center"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@+id/eventsImageError"
+                    app:layout_constraintStart_toStartOf="@id/eventsImageError"
+                    app:layout_constraintTop_toBottomOf="@id/eventsImageError" />
+
+                <ProgressBar
+                    android:id="@+id/event_progressbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/rcViewEvents"
+                    app:layout_constraintEnd_toEndOf="@+id/rcViewEvents"
+                    app:layout_constraintStart_toStartOf="@+id/rcViewEvents"
+                    app:layout_constraintTop_toTopOf="@+id/rcViewEvents" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
