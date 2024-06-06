@@ -10,7 +10,6 @@ import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +17,7 @@ import playzone.tj.R
 import playzone.tj.databinding.FragmentPopularEventsBinding
 import playzone.tj.retrofit.models.events.EventDTO
 import playzone.tj.ui.main.home.all_events.adapter.AllEventsAdapter
+import playzone.tj.ui.main.home.viewModels.EventUIState
 import playzone.tj.ui.main.home.viewModels.HomeViewModel
 import playzone.tj.utils.APP_ACTIVITY
 
@@ -29,7 +29,7 @@ class PopularEventsFragment() : Fragment() {
     private lateinit var rcView: RecyclerView
     private lateinit var adapter: AllEventsAdapter
     private val viewModel: HomeViewModel by activityViewModels()
-
+    private var eventData: List<EventDTO> = mutableListOf()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,34 +39,41 @@ class PopularEventsFragment() : Fragment() {
     }
 
 
-    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         animateSearchView()
-      //  initRcView()
         findEvent()
         binding.back.setOnClickListener {
             val action = PopularEventsFragmentDirections.actionPopularEventsFragmentToHomeFragment()
             findNavController().navigate(action)
         }
+
+        when (viewModel.eventUIState.value) {
+            is EventUIState.Loading -> {}
+            is EventUIState.Success -> {
+                eventData = (viewModel.eventUIState.value as EventUIState.Success).eventData
+                initRcView(eventData)
+            }
+
+            is EventUIState.Error -> {}
+            is EventUIState.Empty -> {}
+        }
+
     }
 
-    /*private fun initRcView() {
+    private fun initRcView(eventData: List<EventDTO>) {
         rcView = binding.rcViewEvents
         rcView.layoutManager = LinearLayoutManager(APP_ACTIVITY)
         Log.d("MyTag", "PopularFragment:initRcView")
-        viewModel.eventData.observe(viewLifecycleOwner, Observer {listEvents->
-            listEvents?.let {
-                adapter = AllEventsAdapter(it.eventData) {event->
-                    val action =
-                        PopularEventsFragmentDirections.actionPopularEventsFragmentToEventDetailFragment(event)
-                    findNavController().navigate(action)
-                }
-                rcView.adapter = adapter
-            }
+        adapter = AllEventsAdapter(eventData) {
+            val action =
+                PopularEventsFragmentDirections.actionPopularEventsFragmentToEventDetailFragment(it)
+            findNavController().navigate(action)
+        }
+        rcView.adapter = adapter
 
-        })
 
-    }*/
+    }
 
     private fun animateSearchView() {
         binding.find.setOnClickListener {
@@ -96,7 +103,6 @@ class PopularEventsFragment() : Fragment() {
                 R.anim.slide_searchview_gone
             )
 
-
             binding.searchView.visibility = View.GONE
             binding.tvCancel.visibility = View.GONE
             binding.back.visibility = View.VISIBLE
@@ -107,13 +113,11 @@ class PopularEventsFragment() : Fragment() {
             binding.find.startAnimation(slideLeftToRight)
             binding.popularEventText.startAnimation(slideLeftToRight)
             binding.back.startAnimation(slideLeftToRight)
-            // binding.searchView.setQuery("", false)
-            // binding.searchView.clearFocus()
             binding.nothingFind.visibility = View.GONE
             binding.nothingFindText.visibility = View.GONE
             binding.rcViewEvents.isVisible = true
 
-            rcView.adapter = AllEventsAdapter(viewModel.eventData.value!!.eventData) {
+            rcView.adapter = AllEventsAdapter(eventData) {
                 val action =
                     PopularEventsFragmentDirections.actionPopularEventsFragmentToEventDetailFragment(
                         it
@@ -128,7 +132,7 @@ class PopularEventsFragment() : Fragment() {
 
         if (query != null) {
             val filteredList = ArrayList<EventDTO>()
-            for (i in viewModel.eventData.value!!.eventData) {
+            for (i in eventData) {
                 if (i.eventName.contains(query, ignoreCase = true)) {
                     filteredList.add(i)
                 }
@@ -168,7 +172,7 @@ class PopularEventsFragment() : Fragment() {
                 return true
             }
         })
-    }*/
+    }
 
 
 }

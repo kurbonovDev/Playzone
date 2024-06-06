@@ -3,7 +3,6 @@ package playzone.tj.ui.main.home
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,29 +20,33 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.coroutines.launch
 import playzone.tj.R
-import playzone.tj.ui.main.home.adapter_home.EventAdapter
 import playzone.tj.databinding.FragmentHomeBinding
 import playzone.tj.retrofit.models.User
 import playzone.tj.retrofit.models.events.EventDTO
 import playzone.tj.retrofit.models.user_genres.Genres
+import playzone.tj.ui.main.home.adapter_home.EventAdapter
 import playzone.tj.ui.main.home.adapter_home.GenreAdapter
 import playzone.tj.ui.main.home.viewModels.EventUIState
 import playzone.tj.ui.main.home.viewModels.HomeViewModel
+import playzone.tj.ui.main.home.viewModels.UserGenreUIState
+import playzone.tj.ui.main.home.viewModels.UserUIState
 import playzone.tj.utils.APP_ACTIVITY
+import playzone.tj.utils.LOGIN_KEY
 import playzone.tj.utils.STORAGE_KEY
+import playzone.tj.utils.TOKEN_KEY
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var rcViewEvents: RecyclerView
-    private lateinit var rcViewCategories: RecyclerView
+    private lateinit var rcViewCategory: RecyclerView
     private var listGenresName = listOf<String>()
     private var listGenres = mutableListOf<Genres>()
+    private var token: String? = null
+    private var login: String? = null
 
-    private val homeViewModel: HomeViewModel by activityViewModels {
-        HomeViewModel.MainViewModelFactory(requireContext())
-    }
+    private val homeViewModel: HomeViewModel by activityViewModels()
 
 
     private val genreImageMap = mapOf(
@@ -58,19 +61,24 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d("MyTag", "ViewModel UserData :${homeViewModel.userUIState.value}")
+        sharedPreferences = APP_ACTIVITY.getSharedPreferences(STORAGE_KEY, Context.MODE_PRIVATE)
+        sharedPreferences.edit()?.putBoolean("isChosenGenre", true)?.apply()
+        token = sharedPreferences.getString(TOKEN_KEY, "")
+        login = sharedPreferences.getString(LOGIN_KEY, "")
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        sharedPreferences = APP_ACTIVITY.getSharedPreferences(STORAGE_KEY, Context.MODE_PRIVATE)
-        sharedPreferences.edit()?.putBoolean("isChosenGenre", true)?.apply()
+
         super.onViewCreated(view, savedInstanceState)
+        homeViewModel.fetchUser(login = login)
+        homeViewModel.fetchEvents(token = token)
+        homeViewModel.fetchUserGenres(login = login)
         openSettings()
         showAllEvents()
         updateUI()
-        UiState()
+        uiState()
     }
 
     private fun showAllEvents() {
@@ -87,6 +95,103 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun uiState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.eventUIState.collect { state ->
+                    binding.apply {
+                        mainProgressbar.isVisible = state is EventUIState.Loading
+                        rcViewEvents.isVisible = state is EventUIState.Success
+                        eventsImageError.isVisible =
+                            (state is EventUIState.Error || state is EventUIState.Empty)
+                        eventsTextError.isVisible =
+                            (state is EventUIState.Error || state is EventUIState.Empty)
+                        showAllText.isVisible = state is EventUIState.Success
+                        popularEventText.isVisible = state is EventUIState.Success
+                    }
+
+                    when (state) {
+                        is EventUIState.Loading -> {}
+                        is EventUIState.Success -> initEventRcView(state.eventData)
+                        is EventUIState.Error -> binding.eventsTextError.text = state.errorMessage
+                        is EventUIState.Empty -> binding.eventsTextError.text = "No such data"
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.genreUIState.collect { state ->
+                    binding.apply {
+                        mainProgressbar.isVisible = state is UserGenreUIState.Loading
+                        rcViewCategory.isVisible = state is UserGenreUIState.Success
+                        genreTextError.isVisible =
+                            (state is UserGenreUIState.Error || state is UserGenreUIState.Empty)
+                        genreImageError.isVisible =
+                            (state is UserGenreUIState.Error || state is UserGenreUIState.Empty)
+
+                    }
+                    when (state) {
+                        is UserGenreUIState.Loading -> {}
+                        is UserGenreUIState.Success -> initRcViewUserGenres(state.userGenreData.userGenres)
+                        is UserGenreUIState.Error -> binding.genreTextError.text =
+                            state.errorMessage
+
+                        is UserGenreUIState.Empty -> binding.genreTextError.text = "No such data"
+                    }
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.userUIState.collect { state ->
+                    binding.mainProgressbar.isVisible = state is UserUIState.Loading
+                    when (state) {
+                        is UserUIState.Loading -> {}
+                        is UserUIState.Success -> initUser(state.userData)
+                        is UserUIState.Error -> Toast.makeText(
+                            requireContext(),
+                            state.errorMessage,
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        is UserUIState.Empty -> {}
+                    }
+                }
+            }
+        }
+
+    }
+
+    private fun initEventRcView(list: List<EventDTO>) {
+        list.let {
+            rcViewEvents = binding.rcViewEvents
+            rcViewEvents.layoutManager =
+                LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            rcViewEvents.adapter = EventAdapter(it) {
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToEventDetailFragment(it)
+                findNavController().navigate(action)
+            }
+        }
+    }
+
+    private fun initRcViewUserGenres(userGenres: List<String>?) {
+        userGenres?.let {
+            listGenresName = it
+            listGenres = listGenresName.mapNotNull { genreName ->
+                genreImageMap[genreName]?.let { imageResId ->
+                    Genres(imageResId, genreName)
+                }
+            }.toMutableList()
+            rcViewCategory = binding.rcViewCategory
+            rcViewCategory.layoutManager =
+                LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            rcViewCategory.adapter = GenreAdapter(listGenres)
+        }
+    }
+
     private fun initUser(user: User?) {
         user?.let {
             binding.nameUser.text = it.username
@@ -98,110 +203,12 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setUserError(errorMessage: String?) {
-        if (!errorMessage.isNullOrEmpty())
-            Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun isUserLoading(loading: Boolean) {
-        binding.userProgressbar.isVisible = loading
-    }
-
-    private fun UiState() {
-       /* homeViewModel.eventData.observe(viewLifecycleOwner) {
-            initEventRcView(it.eventData)
-            setEventError(it.errorMessage)
-            isEventLoading(it.isLoading)
-
-        }*/
-
-        homeViewModel.userUIState.observe(viewLifecycleOwner) {
-            initUser(it.user)
-            setUserError(it.errorMessage)
-            isUserLoading(it.isLoading)
-        }
-
-        homeViewModel.genreUIState.observe(viewLifecycleOwner){
-            initRcViewUserGenres(it.userGenresResponse.userGenres)
-            setUserGenreError(it.errorMessage)
-            isUserGenreLoading(it.isLoading)
-
-        }
-
-
-        /*viewLifecycleOwner.lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
-                homeViewModel.eventUIState.collect { state ->
-                    initEventRcView(state.eventData)
-                    setEventError(state.errorMessage)
-                    isEventLoading(state.isLoading)
-                }
-            }
-        }*/
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                homeViewModel.eventUIState.collect { state ->
-                    when (state) {
-                        is EventUIState.Loading -> showLoading()
-                        is EventUIState.Success -> showSuccess(state.eventData)
-                        is EventUIState.Error -> showError(state.errorMessage)
-                        is EventUIState.Empty -> showEmpty()
-                    }
-                }
-            }
-        }
-
-    }
-
-    private fun isUserGenreLoading(loading: Boolean) {
-        binding.genreProgressbar.isVisible = loading
-    }
-
-    private fun setUserGenreError(errorMessage: String?) {
-        if (!errorMessage.isNullOrEmpty())
-            Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun initRcViewUserGenres(userGenres: List<String>?) {
-        userGenres?.let {
-            listGenresName = it
-            listGenres = listGenresName.mapNotNull { genreName ->
-                genreImageMap[genreName]?.let { imageResId ->
-                    Genres(imageResId, genreName)
-                }
-            }.toMutableList()
-            rcViewCategories = binding.reViewCategory
-            rcViewCategories.layoutManager =
-                LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            rcViewCategories.adapter = GenreAdapter(listGenres)
-        }
-    }
-
-
-
-
-    private fun initEventRcView(list: List<EventDTO>) {
-        list.let {
-            rcViewEvents = binding.rcViewEvents
-            rcViewEvents.layoutManager =
-                LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            if (it.isNotEmpty()) {
-                rcViewEvents.adapter = EventAdapter(it) {
-                    val action =
-                        HomeFragmentDirections.actionHomeFragmentToEventDetailFragment(it)
-                    findNavController().navigate(action)
-                }
-            }
-        }
-    }
-
     private fun updateUI() {
         binding.swiper.setOnRefreshListener {
             homeViewModel.clearData()
-            homeViewModel.fetchUser()
-            homeViewModel.fetchEvents()
-            homeViewModel.fetchUserGenres()
+            homeViewModel.fetchUser(login)
+            homeViewModel.fetchEvents(token)
+            homeViewModel.fetchUserGenres(login)
             binding.swiper.isRefreshing = false
 
         }
@@ -210,52 +217,6 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         listGenres.clear()
-    }
-
-
-    private fun showLoading() {
-        binding.apply {
-            eventProgressbar.isVisible = true
-            rcViewEvents.isVisible = false
-            eventsImageError.isVisible = false
-            eventsTextError.isVisible = false
-            showAllText.isVisible = false
-            popularEventText.isVisible = false
-        }
-    }
-
-    private fun showSuccess(eventData: List<EventDTO>) {
-        binding.apply {
-            eventProgressbar.isVisible = false
-            rcViewEvents.isVisible = true
-            initEventRcView(eventData)
-            eventsImageError.isVisible = false
-            eventsTextError.isVisible = false
-            showAllText.isVisible = true
-            popularEventText.isVisible = true
-        }
-    }
-
-    private fun showError(errorMessage: String?) {
-        binding.apply {
-            eventProgressbar.isVisible = false
-            rcViewEvents.isVisible = false
-            eventsTextError.text = errorMessage
-            eventsTextError.isVisible = true
-            eventsImageError.isVisible = true
-            showAllText.isVisible = false
-            popularEventText.isVisible = false
-        }
-    }
-
-    private fun showEmpty() {
-        binding.apply {
-            eventProgressbar.isVisible = false
-            rcViewEvents.isVisible = false
-            eventsTextError.text = "No such data"
-            eventsTextError.isVisible = true
-            eventsImageError.isVisible = false
-        }
     }
 
 }
