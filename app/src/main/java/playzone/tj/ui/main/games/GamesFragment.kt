@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -34,6 +35,7 @@ import playzone.tj.utils.STORAGE_KEY
 import playzone.tj.utils.TOKEN_KEY
 import playzone.tj.utils.filterGames
 
+@AndroidEntryPoint
 class GamesFragment : Fragment() {
 
     private lateinit var binding: FragmentGamesBinding

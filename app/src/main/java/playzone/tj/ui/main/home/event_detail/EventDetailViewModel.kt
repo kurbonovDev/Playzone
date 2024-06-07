@@ -1,19 +1,20 @@
 package playzone.tj.ui.main.home.event_detail
 
 import androidx.lifecycle.ViewModel
-import playzone.tj.retrofit.models.events.EventDTO
+import dagger.hilt.android.lifecycle.HiltViewModel
+import playzone.tj.retrofit.MainAPI
 import playzone.tj.retrofit.models.events.EventImagesRequest
-import playzone.tj.retrofit.models.events.EventRequest
-import playzone.tj.utils.mainApi
+import javax.inject.Inject
 
-class EventDetailViewModel : ViewModel() {
+@HiltViewModel
+class EventDetailViewModel @Inject constructor(private val mainAPI: MainAPI) : ViewModel() {
     private var _data = listOf<String>()
     val eventData: List<String> get() = _data
 
 
     suspend fun fetchEventImages(eventId: String) {
         if (_data.isEmpty())
-            _data = mainApi.fetchEventImages(EventImagesRequest(eventId))
+            _data = mainAPI.fetchEventImages(EventImagesRequest(eventId))
     }
 
 }

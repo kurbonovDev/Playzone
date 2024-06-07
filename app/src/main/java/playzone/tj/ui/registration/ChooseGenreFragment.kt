@@ -4,29 +4,32 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import playzone.tj.databinding.FragmentChooseGenreBinding
+import playzone.tj.retrofit.MainAPI
 import playzone.tj.retrofit.models.user_genres.UsersGenresRequest
 import playzone.tj.ui.main.PointFragment
-import playzone.tj.ui.main.home.HomeFragment
 import playzone.tj.utils.APP_ACTIVITY
-import playzone.tj.utils.mainApi
 import playzone.tj.utils.replaceFragment
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class ChooseGenreFragment() : Fragment() {
 
     private lateinit var binding: FragmentChooseGenreBinding
     private var listGenres = mutableListOf<String>()
     private var sharedPreferences: SharedPreferences? = null
+    @Inject
+    lateinit var mainAPI: MainAPI
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -105,7 +108,7 @@ class ChooseGenreFragment() : Fragment() {
                         withContext(Dispatchers.Main){
                             binding.btnChooseGenre.isEnabled = false
                         }
-                        mainApi.addGenresToUser(
+                        mainAPI.addGenresToUser(
                             UsersGenresRequest(
                                 userLogin = login,
                                 genreId = listGenres

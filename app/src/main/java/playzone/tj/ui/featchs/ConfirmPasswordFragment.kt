@@ -7,21 +7,24 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import kotlinx.coroutines.CoroutineScope
+import androidx.lifecycle.lifecycleScope
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import playzone.tj.databinding.FragmentConfirmPasswordBinding
+import playzone.tj.retrofit.MainAPI
 import playzone.tj.retrofit.models.forget_password.ForgetPasswordRemote
 import playzone.tj.ui.login.LoginFragment
 import playzone.tj.utils.APP_ACTIVITY
-import playzone.tj.utils.mainApi
 import playzone.tj.utils.replaceFragment
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class ConfirmPasswordFragment(private val email: String) : Fragment() {
 
-
+    @Inject
+    lateinit var mainAPI: MainAPI
     private lateinit var binding: FragmentConfirmPasswordBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,10 +59,10 @@ class ConfirmPasswordFragment(private val email: String) : Fragment() {
                     checkCode,
                     newPassword = newPassword
                 )
-                CoroutineScope(Dispatchers.IO).launch {
+                viewLifecycleOwner.lifecycleScope.launch {
                     try {
 
-                        mainApi.confirmNewPassword(forgetPasswordResponseRemote)
+                        mainAPI.confirmNewPassword(forgetPasswordResponseRemote)
                         APP_ACTIVITY.supportFragmentManager.popBackStack(
                             null,
                             FragmentManager.POP_BACK_STACK_INCLUSIVE

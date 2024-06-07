@@ -5,33 +5,34 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.CoroutineScope
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import playzone.tj.databinding.FragmentOtpScreenBinding
+import playzone.tj.retrofit.MainAPI
 import playzone.tj.retrofit.models.registration.Otp
 import playzone.tj.retrofit.models.registration.RegisterReceiveRemote
-import playzone.tj.ui.registration.ChooseGenreFragment
 import playzone.tj.utils.APP_ACTIVITY
 import playzone.tj.utils.AppTextWatcher
-import playzone.tj.utils.mainApi
 import playzone.tj.utils.replaceFragment
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class OtpScreenFragment(private val registerReceiveRemote: RegisterReceiveRemote) : Fragment() {
 
 
     private lateinit var binding: FragmentOtpScreenBinding
     private var sharedPreferences: SharedPreferences? = null
+    @Inject
+    lateinit var mainAPI: MainAPI
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,7 +72,7 @@ class OtpScreenFragment(private val registerReceiveRemote: RegisterReceiveRemote
     private fun sendOtpToEmail() {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                mainApi.registerNewUser(registerReceiveRemote)
+                mainAPI.registerNewUser(registerReceiveRemote)
             } catch (e: Exception) {
                 Log.d("MyTag", "RegisterFragment:${e.message}")
             }
@@ -103,7 +104,7 @@ class OtpScreenFragment(private val registerReceiveRemote: RegisterReceiveRemote
             if (otpCode.length == 4) {
                 viewLifecycleOwner.lifecycleScope.launch {
                     try {
-                        val token = mainApi.checkOtpCodeForRegister(otp = otp)
+                        val token = mainAPI.checkOtpCodeForRegister(otp = otp)
 
                         if (token != null) {
                             withContext(Dispatchers.Main) {

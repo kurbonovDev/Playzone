@@ -2,28 +2,31 @@ package playzone.tj.ui.registration
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.CoroutineScope
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import playzone.tj.databinding.FragmentRegisterBinding
+import playzone.tj.retrofit.MainAPI
 import playzone.tj.retrofit.models.registration.RegisterReceiveRemote
 import playzone.tj.utils.APP_ACTIVITY
-import playzone.tj.utils.mainApi
 import playzone.tj.utils.replaceFragment
 import retrofit2.HttpException
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class RegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var userInfoForRegister: RegisterReceiveRemote
+    @Inject
+    lateinit var mainAPI: MainAPI
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,7 +62,7 @@ class RegisterFragment : Fragment() {
             binding.btnCreateAccount.isEnabled = false
             viewLifecycleOwner.lifecycleScope.launch {
                 try {
-                    mainApi.registerNewUser(userInfoForRegister)
+                    mainAPI.registerNewUser(userInfoForRegister)
                     replaceFragment(OtpScreenFragment(userInfoForRegister))
                 } catch (e: HttpException) {
                     if (e.code() == 409) {

@@ -2,19 +2,14 @@ package playzone.tj.ui.main.games.viewModels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import playzone.tj.retrofit.models.events.EventDTO
-import playzone.tj.retrofit.models.events.EventRequest
+import dagger.hilt.android.lifecycle.HiltViewModel
+import playzone.tj.retrofit.MainAPI
 import playzone.tj.retrofit.models.games.GameDTO
 import playzone.tj.retrofit.models.games.GameRequest
-import playzone.tj.retrofit.models.games.GameResponse
-import playzone.tj.utils.mainApi
+import javax.inject.Inject
 
-class GameViewModel : ViewModel() {
+@HiltViewModel
+class GameViewModel @Inject constructor(private val mainAPI: MainAPI) : ViewModel() {
 
     private var _data = listOf<GameDTO>()
     val gameData: List<GameDTO> get() = _data
@@ -25,11 +20,11 @@ class GameViewModel : ViewModel() {
 
     suspend fun fetchGames(token: String) {
         if (_data.isEmpty())
-            _data = mainApi.fetchGames(token, GameRequest(""))
+            _data = mainAPI.fetchGames(token, GameRequest(""))
     }
 
     suspend fun findGames(token: String, searchQuery: String) {
-        _findData = mainApi.findGames(
+        _findData = mainAPI.findGames(
             headerValue = token,
             gameRequest = GameRequest(searchQuery)
         )

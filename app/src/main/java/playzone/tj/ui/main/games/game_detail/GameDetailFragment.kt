@@ -1,26 +1,28 @@
 package playzone.tj.ui.main.games.game_detail
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import playzone.tj.R
 import playzone.tj.databinding.FragmentGameDetailBinding
+import playzone.tj.retrofit.MainAPI
 import playzone.tj.retrofit.models.games.GameDTO
 import playzone.tj.retrofit.models.games.GetGameGenre
 import playzone.tj.ui.main.games.game_detail.adapters.GenreGameAdapter
-import playzone.tj.utils.mainApi
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class GameDetailFragment() : Fragment() {
 
     private lateinit var binding: FragmentGameDetailBinding
@@ -28,6 +30,8 @@ class GameDetailFragment() : Fragment() {
     private val args: GameDetailFragmentArgs by navArgs()
     private var game: GameDTO? = null
 
+    @Inject
+    lateinit var mainAPI: MainAPI
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -69,7 +73,7 @@ class GameDetailFragment() : Fragment() {
                 .into(binding.someGameImage)
 
             viewLifecycleOwner.lifecycleScope.launch {
-                val listGenres = mainApi.fetchGameGenre(GetGameGenre(game!!.gameID))
+                val listGenres = mainAPI.fetchGameGenre(GetGameGenre(game!!.gameID))
                 with(Dispatchers.Main) {
                     rcViewGenres = binding.rcViewGenres
                     rcViewGenres.layoutManager =

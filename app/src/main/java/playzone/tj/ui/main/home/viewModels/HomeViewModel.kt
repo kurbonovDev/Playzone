@@ -2,18 +2,21 @@ package playzone.tj.ui.main.home.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import playzone.tj.retrofit.MainAPI
 import playzone.tj.retrofit.models.GetUser
 import playzone.tj.retrofit.models.User
 import playzone.tj.retrofit.models.events.EventDTO
 import playzone.tj.retrofit.models.events.EventRequest
 import playzone.tj.retrofit.models.user_genres.UserGenresReceive
 import playzone.tj.retrofit.models.user_genres.UserGenresResponse
-import playzone.tj.utils.mainApi
+import javax.inject.Inject
 
-class HomeViewModel() : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val mainAPI: MainAPI) : ViewModel() {
 
     private val _eventUIState = MutableStateFlow<EventUIState>(EventUIState.Empty)
     val eventUIState: StateFlow<EventUIState> get() = _eventUIState
@@ -34,7 +37,7 @@ class HomeViewModel() : ViewModel() {
             if (_eventUIState.value is EventUIState.Empty) {
                 _eventUIState.value = EventUIState.Loading
                 try {
-                    val response = mainApi.fetchEvent(headerValue = token, EventRequest(""))
+                    val response = mainAPI.fetchEvent(headerValue = token, EventRequest(""))
                     if (response.isSuccessful) {
                         if (response.body()?.isEmpty() == true) {
                             _eventUIState.value = EventUIState.Empty
@@ -59,7 +62,7 @@ class HomeViewModel() : ViewModel() {
             if (_userUIState.value is UserUIState.Empty) {
                 _userUIState.value = UserUIState.Loading
                 try {
-                    val response = mainApi.fetchUser(GetUser(login))
+                    val response = mainAPI.fetchUser(GetUser(login))
                     if (response.isSuccessful) {
                         _userUIState.value = UserUIState.Success(response.body()!!)
                     } else {
@@ -82,7 +85,7 @@ class HomeViewModel() : ViewModel() {
             if (_genreUIState.value is UserGenreUIState.Empty) {
                 _genreUIState.value = UserGenreUIState.Loading
                 try {
-                    val response = mainApi.fetchUserGenres(UserGenresReceive(login))
+                    val response = mainAPI.fetchUserGenres(UserGenresReceive(login))
                     if (response.isSuccessful) {
                         _genreUIState.value = UserGenreUIState.Success(
                             response.body() ?: UserGenresResponse(

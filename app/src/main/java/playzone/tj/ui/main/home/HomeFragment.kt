@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import playzone.tj.R
 import playzone.tj.databinding.FragmentHomeBinding
@@ -34,9 +36,12 @@ import playzone.tj.utils.APP_ACTIVITY
 import playzone.tj.utils.LOGIN_KEY
 import playzone.tj.utils.STORAGE_KEY
 import playzone.tj.utils.TOKEN_KEY
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
+    private val homeViewModel: HomeViewModel by activityViewModels()
     private lateinit var binding: FragmentHomeBinding
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var rcViewEvents: RecyclerView
@@ -45,10 +50,6 @@ class HomeFragment : Fragment() {
     private var listGenres = mutableListOf<Genres>()
     private var token: String? = null
     private var login: String? = null
-
-    private val homeViewModel: HomeViewModel by activityViewModels()
-
-
     private val genreImageMap = mapOf(
         "Puzzle" to R.drawable.puzzle_image,
         "Sport" to R.drawable.sport_image,
@@ -58,8 +59,7 @@ class HomeFragment : Fragment() {
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         sharedPreferences = APP_ACTIVITY.getSharedPreferences(STORAGE_KEY, Context.MODE_PRIVATE)
         sharedPreferences.edit()?.putBoolean("isChosenGenre", true)?.apply()
@@ -98,7 +98,7 @@ class HomeFragment : Fragment() {
     private fun uiState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                homeViewModel.eventUIState.collect { state ->
+                homeViewModel.eventUIState.collectLatest { state ->
                     binding.apply {
                         mainProgressbar.isVisible = state is EventUIState.Loading
                         rcViewEvents.isVisible = state is EventUIState.Success
@@ -111,7 +111,7 @@ class HomeFragment : Fragment() {
                     }
 
                     when (state) {
-                        is EventUIState.Loading -> {}
+                        is EventUIState.Loading -> Unit
                         is EventUIState.Success -> initEventRcView(state.eventData)
                         is EventUIState.Error -> binding.eventsTextError.text = state.errorMessage
                         is EventUIState.Empty -> binding.eventsTextError.text = "No such data"
@@ -133,7 +133,7 @@ class HomeFragment : Fragment() {
 
                     }
                     when (state) {
-                        is UserGenreUIState.Loading -> {}
+                        is UserGenreUIState.Loading -> Unit
                         is UserGenreUIState.Success -> initRcViewUserGenres(state.userGenreData.userGenres)
                         is UserGenreUIState.Error -> binding.genreTextError.text =
                             state.errorMessage
@@ -148,15 +148,13 @@ class HomeFragment : Fragment() {
                 homeViewModel.userUIState.collect { state ->
                     binding.mainProgressbar.isVisible = state is UserUIState.Loading
                     when (state) {
-                        is UserUIState.Loading -> {}
+                        is UserUIState.Loading -> Unit
                         is UserUIState.Success -> initUser(state.userData)
                         is UserUIState.Error -> Toast.makeText(
-                            requireContext(),
-                            state.errorMessage,
-                            Toast.LENGTH_SHORT
+                            requireContext(), state.errorMessage, Toast.LENGTH_SHORT
                         ).show()
 
-                        is UserUIState.Empty -> {}
+                        is UserUIState.Empty -> Unit
                     }
                 }
             }
@@ -170,8 +168,7 @@ class HomeFragment : Fragment() {
             rcViewEvents.layoutManager =
                 LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             rcViewEvents.adapter = EventAdapter(it) {
-                val action =
-                    HomeFragmentDirections.actionHomeFragmentToEventDetailFragment(it)
+                val action = HomeFragmentDirections.actionHomeFragmentToEventDetailFragment(it)
                 findNavController().navigate(action)
             }
         }
@@ -195,11 +192,8 @@ class HomeFragment : Fragment() {
     private fun initUser(user: User?) {
         user?.let {
             binding.nameUser.text = it.username
-            Glide.with(requireActivity())
-                .load(it.userImage)
-                .error(R.drawable.user)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(binding.imageUser)
+            Glide.with(requireActivity()).load(it.userImage).error(R.drawable.user)
+                .diskCacheStrategy(DiskCacheStrategy.ALL).into(binding.imageUser)
         }
     }
 

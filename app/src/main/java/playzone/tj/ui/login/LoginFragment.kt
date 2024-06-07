@@ -4,29 +4,31 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.CoroutineScope
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import playzone.tj.databinding.FragmentLoginBinding
+import playzone.tj.retrofit.MainAPI
 import playzone.tj.retrofit.models.login.LoginReceiveRemote
 import playzone.tj.ui.featchs.ForgetFragment
 import playzone.tj.ui.main.PointFragment
-import playzone.tj.ui.main.home.HomeFragment
 import playzone.tj.ui.registration.RegisterFragment
 import playzone.tj.utils.APP_ACTIVITY
-import playzone.tj.utils.mainApi
 import playzone.tj.utils.replaceFragment
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
+    @Inject
+    lateinit var mainAPI:MainAPI
 
     private lateinit var binding: FragmentLoginBinding
     private lateinit var sharedPreferences: SharedPreferences
@@ -61,7 +63,7 @@ class LoginFragment : Fragment() {
 
         if (login.isNotEmpty() and password.isNotEmpty()) {
             try {
-                val token = mainApi.login(LoginReceiveRemote(login, password))
+                val token = mainAPI.login(LoginReceiveRemote(login, password))
                 if (token != null) {
                     sharedPreferences.edit()?.putBoolean("isRegistered", true)?.apply()
                     sharedPreferences.edit()?.putString("token", token.token)?.apply()
