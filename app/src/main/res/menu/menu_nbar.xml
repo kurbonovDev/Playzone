@@ -24,7 +24,7 @@
         android:id="@+id/streamFragment"
         android:icon="@drawable/ic_translation"
         android:orderInCategory="4"
-        android:title="Отчет"
+        android:title="Streams"
         app:showAsAction="always|collapseActionView" />
 
 </menu>

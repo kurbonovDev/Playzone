@@ -1,6 +1,6 @@
 package playzone.tj.utils
 
-import playzone.tj.MainActivity
+import playzone.tj.presentation.MainActivity
 
 lateinit var APP_ACTIVITY: MainActivity
 

@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import androidx.fragment.app.Fragment
 import playzone.tj.R
-import playzone.tj.retrofit.models.games.GameDTO
+import playzone.tj.data.remote.retrofit.models.games.GameDTO
 
 
 fun replaceFragment(fragment: Fragment, addStack: Boolean = true) {

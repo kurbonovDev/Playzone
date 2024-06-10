@@ -6,7 +6,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import playzone.tj.retrofit.MainAPI
+import playzone.tj.data.mapper.EventItemMapper
+import playzone.tj.data.remote.retrofit.MainAPI
+import playzone.tj.data.repository.FetchEventRepoImp
+import playzone.tj.domain.usecases.FetchEventsUseCase
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -51,5 +54,17 @@ class RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): MainAPI= retrofit.create(MainAPI::class.java)
+    fun provideEventRepositoryImpl(mainAPI: MainAPI) = FetchEventRepoImp(mainAPI)
+
+    @Provides
+    @Singleton
+    fun provideEventItemMapper() = EventItemMapper()
+
+    @Provides
+    @Singleton
+    fun provideFetchEventUseCase(fetchEventRepoImp: FetchEventRepoImp,eventItemMapper: EventItemMapper) = FetchEventsUseCase(fetchEventRepoImp,eventItemMapper)
+
+    @Provides
+    @Singleton
+    fun provideApiService(retrofit: Retrofit): MainAPI = retrofit.create(MainAPI::class.java)
 }

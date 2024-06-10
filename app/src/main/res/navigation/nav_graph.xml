@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="playzone.tj.ui.main.home.HomeFragment"
+        android:name="playzone.tj.presentation.main.home.HomeFragment"
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_userInfoFragment"
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/userInfoFragment"
-        android:name="playzone.tj.ui.main.home.user_info.UserInfoFragment"
+        android:name="playzone.tj.presentation.main.home.user_info.UserInfoFragment"
         android:label="fragment_fill_user_info"
         tools:layout="@layout/fragment_fill_user_info" >
         <action
@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/popularEventsFragment"
-        android:name="playzone.tj.ui.main.home.all_events.PopularEventsFragment"
+        android:name="playzone.tj.presentation.main.home.all_events.PopularEventsFragment"
         android:label="fragment_popular_events"
         tools:layout="@layout/fragment_popular_events" >
         <action
@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/gamesFragment"
-        android:name="playzone.tj.ui.main.games.GamesFragment"
+        android:name="playzone.tj.presentation.main.games.GamesFragment"
         android:label="fragment_games"
         tools:layout="@layout/fragment_games" >
         <action
@@ -60,22 +60,22 @@
     </fragment>
     <fragment
         android:id="@+id/gameDetailFragment"
-        android:name="playzone.tj.ui.main.games.game_detail.GameDetailFragment"
+        android:name="playzone.tj.presentation.main.games.game_detail.GameDetailFragment"
         android:label="fragment_game_detail"
         tools:layout="@layout/fragment_game_detail" >
 
         <argument
             android:name="gameDTO"
-            app:argType="playzone.tj.retrofit.models.games.GameDTO"
+            app:argType="playzone.tj.data.remote.retrofit.models.games.GameDTO"
             />
     </fragment>
     <fragment
         android:id="@+id/eventDetailFragment"
-        android:name="playzone.tj.ui.main.home.event_detail.EventDetailFragment"
+        android:name="playzone.tj.presentation.main.home.event_detail.EventDetailFragment"
         android:label="EventDetailFragment" >
         <argument
-            android:name="eventDTO"
-            app:argType="playzone.tj.retrofit.models.events.EventDTO"
+            android:name="domainEventDTO"
+            app:argType="playzone.tj.domain.DomainEventDTO"
             />
         <action
             android:id="@+id/action_eventDetailFragment_to_youTubeFragment"
@@ -84,7 +84,7 @@
     </fragment>
     <fragment
         android:id="@+id/youTubeFragment"
-        android:name="playzone.tj.ui.main.home.event_detail.YouTubeFragment"
+        android:name="playzone.tj.presentation.main.home.event_detail.YouTubeFragment"
         android:label="fragment_you_tube"
         tools:layout="@layout/fragment_you_tube">
         <argument
@@ -93,12 +93,12 @@
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="playzone.tj.ui.main_screen.MainFragment"
+        android:name="playzone.tj.presentation.main_screen.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
     <fragment
         android:id="@+id/streamFragment"
-        android:name="playzone.tj.ui.main.live_streams.StreamFragment"
+        android:name="playzone.tj.presentation.main.live_streams.StreamFragment"
         android:label="fragment_stream"
         tools:layout="@layout/fragment_stream" >
         <action
@@ -110,7 +110,7 @@
     </fragment>
     <fragment
         android:id="@+id/tournamentFragment"
-        android:name="playzone.tj.ui.main.tournament.TournamentFragment"
+        android:name="playzone.tj.presentation.main.tournament.TournamentFragment"
         android:label="fragment_tournament"
         tools:layout="@layout/fragment_tournament" >
         <action
